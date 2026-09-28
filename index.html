@@ -1,1104 +1,907 @@
-<!--
-  HYPRLUV Slideshow
-  https://templatemo.com/tm-627-hyprluv-slideshow
--->
 <!DOCTYPE html>
-<!--
-  TM-627 / HYPRLUV
-  Electronic Press Kit (EPK) slideshow template
-  Free HTML template by TemplateMo (https://templatemo.com)
-  Single file, vanilla JS. No build step, no dependencies.
-  Loud Y2K / editorial poster aesthetic. Hot orange, acid lime, black.
-  Replace all demo copy, stats, dates, and contact details before publishing.
--->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>HYPRLUV // Electronic Press Kit · TM-627 · TemplateMo</title>
-<meta name="description" content="HYPRLUV, a loud Y2K hyperpop electronic press kit. Free single page slideshow HTML template TM-627 from TemplateMo.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folio Slideshow by TemplateMo CSS Templates</title>
+</head>
+<!--
+  Folio Slideshow
+  https://templatemo.com/tm-625-folio-slideshow
+-->
+<body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* TOKENS */
-  :root{
-    --ink:#0B0B0B;
-    --ink-2:#161616;
-    --orange:#FF5826;   /* hot orange, softened a touch from #FF4A00 */
-    --lime:#D0F53A;     /* acid lime, softened a touch from #D4FF00 */
-    --bone:#F3EFE3;
-    --pink:#FF3D7F;
-    --white:#FFFFFF;
+:root{
+  --ee:cubic-bezier(0.19,1,0.22,1);
+  --eq:cubic-bezier(0.77,0,0.175,1);
+  --es:cubic-bezier(0.34,1.56,0.64,1);
 
-    --font-display:"Anton", "Arial Narrow", sans-serif;
-    --font-body:"Space Grotesk", system-ui, sans-serif;
-    --font-pixel:"VT323", ui-monospace, monospace;
+  /* Powder Plum + Coral palette */
+  --paper:#FAF8FC;
+  --surface:#E8E3F0;
+  --surface-2:#F0EBF7;
+  --mute:#9B7BA8;
+  --mute-soft:#C4B0CE;
+  --ink:#2D1F3A;
+  --ink-2:#5A4A66;
+  --accent:#FF6B47;
+  --accent-soft:#FFB59E;
+  --line:rgba(45,31,58,.12);
+  --line-2:rgba(45,31,58,.06);
 
-    --pop:cubic-bezier(0.16, 1, 0.3, 1);      /* snappy expo out */
-    --snap:cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot */
+  --font-serif:'Fraunces',Georgia,serif;
+  --font-sans:'Inter Tight','Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','Courier New',monospace;
+}
 
-    --bar:60px;          /* top bar height, desktop */
-    --foot:50px;         /* fixed footer bar height, desktop */
-    --edge:clamp(18px, 3.6vw, 50px);
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;width:100%;background:var(--paper);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;overflow:hidden}
 
-  /* RESET */
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    font-family:var(--font-body);
-    background:var(--ink);
-    color:var(--white);
-    line-height:1.4;
-    overflow:hidden;            /* deck owns the scroll */
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  a{color:inherit;text-decoration:none}
-  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-  img{max-width:100%;display:block}
-  ::selection{background:var(--lime);color:var(--ink)}
+/* Subtle paper-grain background — gives a warm "printed" feel */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle at 25% 30%,rgba(155,123,168,.06) 0%,transparent 40%),radial-gradient(circle at 75% 70%,rgba(255,107,71,.04) 0%,transparent 50%);opacity:.9}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(45,31,58,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(45,31,58,.025) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,black 20%,transparent 80%)}
 
-  /* CUSTOM SCROLLBARS */
-  .scrollable{scrollbar-width:thin;scrollbar-color:var(--orange) transparent}
-  .scrollable::-webkit-scrollbar{width:9px;height:9px}
-  .scrollable::-webkit-scrollbar-track{background:rgba(255,255,255,.06)}
-  .scrollable::-webkit-scrollbar-thumb{
-    background:var(--orange);
-    border:2px solid var(--ink);
-    border-radius:0;
-  }
-  .scrollable::-webkit-scrollbar-thumb:hover{background:var(--lime)}
-  .s-lime .scrollable,.s-bone .scrollable{scrollbar-color:var(--ink) transparent}
-  .s-lime .scrollable::-webkit-scrollbar-thumb,
-  .s-bone .scrollable::-webkit-scrollbar-thumb{background:var(--ink);border-color:transparent}
+.deck{position:fixed;inset:0;overflow:hidden;z-index:1}
 
-  /* TOP BAR */
-  .topbar{
-    position:fixed;top:0;left:0;right:0;z-index:60;
-    height:var(--bar);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 var(--edge);
-    background:var(--ink);
-    border-bottom:3px solid var(--lime);
-  }
-  .mark{
-    font-family:var(--font-display);
-    font-size:clamp(19px,2.2vw,26px);
-    letter-spacing:.5px;line-height:1;color:var(--white);
-    display:inline-flex;align-items:center;gap:.4em;
-  }
-  .mark b{color:var(--orange)}
-  .mark .dot{
-    width:.42em;height:.42em;background:var(--lime);border-radius:50%;
-    display:inline-block;animation:blink 1.4s steps(2) infinite;
-  }
-  @keyframes blink{50%{opacity:0}}
+/* Slides — editorial paper-turn transition */
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .9s var(--eq),visibility .9s,transform .9s var(--eq);z-index:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;transform:translateX(40px)}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0);transition-delay:.4s}
+.slide.exiting{transition-delay:0s;transform:translateX(-30px)}
 
-  .topright{display:flex;align-items:center;gap:clamp(12px,2vw,20px)}
-  .counter{
-    font-family:var(--font-pixel);
-    font-size:21px;letter-spacing:1px;color:var(--lime);
-    white-space:nowrap;
-  }
-  .counter .now{color:var(--white)}
-  .menu-btn{
-    font-family:var(--font-pixel);font-size:21px;letter-spacing:2px;
-    background:var(--orange);color:var(--ink);
-    padding:5px 15px 3px;border:3px solid var(--ink);
-    box-shadow:4px 4px 0 var(--lime);
-    transition:transform .18s var(--snap),box-shadow .18s var(--pop);
-  }
-  .menu-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--lime)}
-  .menu-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--lime)}
+.slide-inner{min-height:100%;padding:90px 6vmin 80px;display:flex;flex-direction:column;position:relative}
 
-  /* progress bar under the top bar */
-  .progress{
-    position:fixed;top:var(--bar);left:0;right:0;z-index:60;height:5px;
-    background:rgba(255,255,255,.08);
-  }
-  .progress i{
-    display:block;height:100%;width:11.11%;
-    background:var(--orange);
-    transition:width .5s var(--pop);
-  }
+/* === Persistent chrome === */
+.brand{position:fixed;top:32px;left:36px;z-index:100;display:flex;align-items:baseline;gap:10px;font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:22px;letter-spacing:-.01em;color:var(--ink)}
+.brand .mark{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);transform:translateY(-2px)}
+.brand .sub{font-family:var(--font-mono);font-style:normal;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);font-weight:500}
 
-  /* DECK + SLIDES */
-  .deck{position:fixed;inset:0;overflow:hidden}
-  .slide{
-    position:absolute;inset:0;
-    opacity:0;visibility:hidden;
-    /* the background only fades, the content carries the staggered motion */
-    transition:opacity .26s var(--pop),visibility 0s linear .26s;
-  }
-  .slide.active{
-    opacity:1;visibility:visible;z-index:1;
-    /* incoming background fades in just after the outgoing one is gone */
-    transition:opacity .3s var(--pop) .24s,visibility 0s;
-  }
-  .slide.leaving{
-    opacity:0;z-index:2;        /* outgoing sits on top and fades out first */
-    transition:opacity .26s var(--pop),visibility 0s linear .26s;
-  }
+.nav{position:fixed;top:28px;right:28px;display:flex;gap:5px;align-items:center;z-index:100;font-family:var(--font-mono)}
+.nav button{background:var(--paper);border:1px solid var(--line);color:var(--ink);cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:0;font-family:inherit;font-size:13px;font-weight:500;transition:all .25s var(--ee)}
+.nav button:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.counter{font-size:11px;letter-spacing:.18em;padding:0 14px;color:var(--ink);min-width:62px;text-align:center;background:var(--paper);border:1px solid var(--line);height:36px;display:flex;align-items:center;justify-content:center}
+.counter strong{font-weight:500;color:var(--accent)}
 
-  /* scrollable inner column. content centers, footer pins to the bottom */
-  .inner{
-    position:relative;z-index:1;
-    height:100%;width:100%;
-    overflow-y:auto;overflow-x:hidden;
-    padding:calc(var(--bar) + 18px) var(--edge) calc(var(--foot) + 12px);
-    display:flex;flex-direction:column;
-  }
-  .wrap{width:100%;max-width:1120px;margin:auto}   /* auto margins center the block vertically */
+.section-tag{position:fixed;bottom:32px;left:36px;z-index:100;font-family:var(--font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);display:flex;gap:10px;align-items:center;pointer-events:none}
+.section-tag .pip{width:5px;height:5px;border-radius:50%;background:var(--accent)}
 
-  /* one persistent background layer behind every slide. it animates its
-     background-color directly, so a colour change is a true hue to hue blend
-     (orange straight to black) with no opacity crossfade and no muddy dip */
-  .stage-bg{
-    position:absolute;inset:0;z-index:0;
-    background-color:var(--ink);
-    transition:background-color .62s var(--pop);
-    will-change:background-color;
-  }
+.tm-credit{position:fixed;bottom:32px;right:36px;z-index:100;font-family:var(--font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);text-decoration:none;display:flex;gap:8px;align-items:center;transition:color .25s}
+.tm-credit:hover{color:var(--ink)}
+.tm-credit .tm-dot{width:5px;height:5px;border-radius:50%;background:var(--mute)}
 
-  /* slides keep their TEXT colour but the background is owned by .stage-bg,
-     so slide opacity only fades the content, never the colour */
-  .s-ink   {color:var(--white)}
-  .s-orange{color:var(--ink)}
-  .s-lime  {color:var(--ink)}
-  .s-bone  {color:var(--ink)}
+/* === Popup menu — editorial restyle === */
+.menu-btn .icon{display:flex;flex-direction:column;gap:3px;align-items:center}
+.menu-btn .icon i{display:block;width:14px;height:1.5px;background:currentColor;transition:all .3s var(--ee)}
+.menu-btn.open .icon i:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.menu-btn.open .icon i:nth-child(2){opacity:0}
+.menu-btn.open .icon i:nth-child(3){transform:translateY(-4.5px) rotate(-45deg)}
 
-  /* halftone atmosphere so slides are never flat */
-  .s-ink::before,.s-orange::before,.s-lime::before,.s-bone::before{
-    content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
-    background-image:radial-gradient(currentColor 1px,transparent 1.4px);
-    background-size:26px 26px;opacity:.06;
-  }
+.menu-overlay{position:fixed;inset:0;background:rgba(45,31,58,.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;opacity:0;visibility:hidden;transition:opacity .35s var(--ee),visibility .35s}
+.menu-overlay.open{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);width:min(580px,92vw);max-height:84vh;overflow-y:auto;overflow-x:hidden;background:var(--paper);border:1px solid var(--line);z-index:201;opacity:0;visibility:hidden;transition:opacity .4s var(--ee),visibility .4s,transform .5s var(--es);box-shadow:0 30px 80px rgba(45,31,58,.18);scrollbar-width:thin;scrollbar-color:var(--mute-soft) transparent}
+.menu-panel.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.menu-panel::-webkit-scrollbar{width:8px}
+.menu-panel::-webkit-scrollbar-track{background:transparent;margin:18px 0}
+.menu-panel::-webkit-scrollbar-thumb{background:var(--mute-soft);border-radius:0;border:2px solid transparent;background-clip:padding-box}
+.menu-panel::-webkit-scrollbar-thumb:hover{background:var(--accent);background-clip:padding-box}
+.menu-header{padding:28px 32px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}
+.menu-header h3{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:24px;letter-spacing:-.01em}
+.menu-header .menu-meta{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.menu-list{padding:8px 0;display:flex;flex-direction:column}
+.menu-item{display:flex;align-items:baseline;gap:18px;padding:14px 32px;cursor:pointer;transition:all .2s var(--ee);border-bottom:1px solid var(--line-2)}
+.menu-item:last-child{border-bottom:none}
+.menu-item:hover{background:var(--surface-2);padding-left:38px}
+.menu-item.current{background:var(--surface)}
+.menu-item.current::before{content:'';position:absolute;left:0;width:4px;height:30px;background:var(--accent);align-self:center}
+.menu-item{position:relative}
+.menu-item .mi-num{font-family:var(--font-mono);font-size:11px;color:var(--mute);letter-spacing:.18em;width:28px;flex-shrink:0;font-weight:500}
+.menu-item.current .mi-num{color:var(--accent)}
+.menu-item .mi-label{font-family:var(--font-serif);font-weight:400;font-size:18px;letter-spacing:-.005em;flex:1;color:var(--ink)}
+.menu-item .mi-sub{font-family:var(--font-sans);font-size:12px;color:var(--mute);margin-top:2px;letter-spacing:.01em}
+.menu-item .mi-arr{color:var(--mute-soft);font-size:14px;transition:all .25s;font-family:var(--font-sans)}
+.menu-item:hover .mi-arr{color:var(--accent);transform:translateX(4px)}
+.menu-footer{padding:18px 32px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.menu-footer kbd{background:var(--surface);border:1px solid var(--line);padding:3px 8px;font-family:var(--font-mono);font-size:9.5px;color:var(--ink);margin:0 4px;font-weight:500}
 
-  /* TYPE HELPERS */
-  .kicker{
-    font-family:var(--font-pixel);font-size:clamp(16px,1.7vw,21px);
-    letter-spacing:3px;text-transform:uppercase;
-    display:inline-block;
-  }
-  .huge{
-    font-family:var(--font-display);
-    font-size:clamp(50px,11vw,142px);
-    line-height:.86;letter-spacing:-.5px;text-transform:uppercase;
-  }
-  .big{
-    font-family:var(--font-display);
-    font-size:clamp(30px,4.6vw,58px);
-    line-height:1.08;letter-spacing:.5px;text-transform:uppercase;  /* loose enough that the two lines never touch */
-  }
-  .mid{
-    font-family:var(--font-display);
-    font-size:clamp(24px,3.4vw,42px);
-    line-height:.98;letter-spacing:.5px;text-transform:uppercase;
-  }
-  .lead{font-size:clamp(16px,1.55vw,20px);line-height:1.52;max-width:60ch}
-  .mono{font-family:var(--font-pixel);font-size:19px;letter-spacing:1px}
-  .hl-lime{color:var(--lime)}
-  .hl-orange{color:var(--orange)}
-  .hl-pink{color:var(--pink)}
+/* === Reveal utilities === */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ee),transform 1s var(--ee)}
+.slide.active .reveal{opacity:1;transform:translateY(0)}
+.slide.active .reveal:nth-of-type(1){transition-delay:.55s}
+.slide.active .reveal:nth-of-type(2){transition-delay:.7s}
+.slide.active .reveal:nth-of-type(3){transition-delay:.85s}
+.slide.active .reveal:nth-of-type(4){transition-delay:1s}
+.slide.active .reveal:nth-of-type(5){transition-delay:1.15s}
+.slide.active .reveal:nth-of-type(6){transition-delay:1.3s}
+.slide.active .reveal:nth-of-type(7){transition-delay:1.45s}
 
-  /* STICKERS, STARS, TAGS, BUTTONS */
-  .sticker{
-    display:inline-block;
-    font-family:var(--font-pixel);font-size:clamp(14px,1.5vw,19px);
-    letter-spacing:1.5px;text-transform:uppercase;
-    padding:6px 12px 3px;
-    border:3px solid var(--ink);
-    background:var(--lime);color:var(--ink);
-    box-shadow:4px 4px 0 var(--ink);
-    transform:rotate(-4deg);
-  }
-  .sticker.o{background:var(--orange);color:var(--ink)}
-  .sticker.p{background:var(--pink);color:var(--ink)}
-  .sticker.w{background:var(--white);color:var(--ink)}
-  .sticker.r2{transform:rotate(3deg)}
-  .sticker.r3{transform:rotate(-8deg)}
+.mw{display:inline-block;overflow:hidden;vertical-align:bottom}
+.mw>span{display:inline-block;transform:translateY(110%);transition:transform 1.3s var(--ee)}
+.slide.active .mw>span{transform:translateY(0)}
 
-  .star{display:inline-block;width:1em;height:1em;vertical-align:middle}
-  .spin{animation:spin 6s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
+/* === Shared elements === */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.eyebrow::before{content:'';width:32px;height:1px;background:var(--accent)}
 
-  .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
-  .tag{
-    font-family:var(--font-pixel);font-size:16px;letter-spacing:1px;
-    text-transform:uppercase;
-    padding:4px 11px 2px;border:2px solid currentColor;
-  }
+.h-display{font-family:var(--font-serif);font-weight:300;line-height:.98;letter-spacing:-.025em;color:var(--ink)}
+.h-display em{font-style:italic;font-weight:300;color:var(--accent)}
+.h-display .ornament{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--mute)}
 
-  .btnrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
-  .btn{
-    display:inline-flex;align-items:center;gap:.6em;
-    font-family:var(--font-display);font-size:clamp(16px,1.6vw,20px);
-    letter-spacing:.5px;text-transform:uppercase;
-    padding:11px 19px 9px;border:3px solid var(--ink);
-    background:var(--ink);color:var(--lime);
-    box-shadow:5px 5px 0 var(--lime);
-    transition:transform .18s var(--snap),box-shadow .18s var(--pop),background .18s,color .18s;
-  }
-  .btn:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--lime)}
-  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--lime)}
-  .btn.fill{background:var(--lime);color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
-  .btn.fill:hover{box-shadow:8px 8px 0 var(--ink)}
-  .btn.ghost{background:transparent;color:currentColor;box-shadow:5px 5px 0 currentColor}
-  .s-orange .btn,.s-lime .btn,.s-bone .btn{border-color:var(--ink)}
+.body-lg{font-family:var(--font-serif);font-weight:300;font-size:clamp(16px,1.4vw,20px);line-height:1.55;color:var(--ink-2)}
+.body-md{font-family:var(--font-sans);font-size:14px;line-height:1.65;color:var(--ink-2)}
+.body-sm{font-family:var(--font-sans);font-size:12px;line-height:1.5;color:var(--mute)}
 
-  /* MARQUEE (in-flow, full bleed to the viewport edges) */
-  .marquee{
-    overflow:hidden;white-space:nowrap;width:100%;
-    border-top:3px solid currentColor;border-bottom:3px solid currentColor;
-    padding:7px 0;
-  }
-  .marquee.bleed{width:calc(100% + 2 * var(--edge));max-width:none;margin-left:calc(-1 * var(--edge));margin-right:calc(-1 * var(--edge))}
-  .marquee .track{
-    display:inline-block;white-space:nowrap;
-    font-family:var(--font-display);font-size:clamp(22px,3.2vw,38px);
-    letter-spacing:1px;text-transform:uppercase;
-    animation:scroll 22s linear infinite;will-change:transform;
-  }
-  .marquee.rtl .track{animation-direction:reverse}
-  .marquee .track span{padding:0 .35em}
-  .marquee .track .s{color:var(--orange)}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .marquee.thin .track{font-family:var(--font-pixel);font-size:clamp(18px,2vw,24px);letter-spacing:2px}
+.btn-primary{background:var(--ink);color:var(--paper);padding:14px 26px;font-family:var(--font-sans);font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;cursor:pointer;transition:all .3s var(--ee);border:1px solid var(--ink);text-decoration:none}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn-secondary{background:transparent;color:var(--ink);padding:14px 26px;font-family:var(--font-sans);font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;cursor:pointer;transition:all .3s var(--ee);border:1px solid var(--ink);text-decoration:none}
+.btn-secondary:hover{background:var(--ink);color:var(--paper)}
 
-  /* SLIDE 1 COVER */
-  .cover{display:flex;flex-direction:column;gap:clamp(12px,2.2vh,24px)}
-  .cover .toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
-  .cover .stickwrap{display:flex;gap:9px;flex-wrap:wrap}
-  .cover .title{position:relative}
-  .cover .title .huge{color:var(--lime)}
-  .cover .title .huge .o{color:var(--orange)}
-  .cover .floatstar{
-    position:absolute;right:0;top:-.15em;width:clamp(54px,10vw,128px);height:auto;color:var(--orange);
-  }
-  .cover .botrow{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.hairline-top{border-top:1px solid var(--ink)}
+.hairline-bot{border-bottom:1px solid var(--ink)}
 
-  /* SLIDE 2 BIO */
-  .bio-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(20px,3.4vw,46px);align-items:start}
-  .bio-meta{display:flex;flex-direction:column;gap:14px}
-  .meta-card{border:3px solid var(--ink);padding:13px 15px;background:rgba(255,255,255,.18)}
-  .meta-card .k{font-family:var(--font-pixel);font-size:16px;letter-spacing:1px;text-transform:uppercase;opacity:.8}
-  .meta-card .v{font-family:var(--font-display);font-size:clamp(20px,2.1vw,27px);text-transform:uppercase;line-height:1}
+/* ====== SLIDE 1 — COVER ====== */
+.s-cover{align-items:stretch;justify-content:stretch;padding:80px 6vmin 70px;display:grid;grid-template-rows:auto 1fr auto;gap:3.5vmin}
+.s-cover-top{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute)}
+.s-cover-top .tl,.s-cover-top .tr{display:flex;flex-direction:column;gap:8px}
+.s-cover-top .tr{text-align:right;align-items:flex-end}
+.s-cover-top strong{color:var(--ink);font-weight:500;font-size:14px;letter-spacing:.18em}
+.s-cover-center{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:22px;position:relative}
+.s-cover-decor{position:absolute;top:50%;right:-2vmin;transform:translateY(-50%);width:160px;height:160px;border-radius:50%;border:1px solid var(--accent);opacity:0;transition:opacity 1.4s var(--ee) .8s,transform 1.4s var(--ee) .8s}
+.slide.active .s-cover-decor{opacity:.4;transform:translateY(-50%) scale(1)}
+.s-cover-decor::before{content:'';position:absolute;inset:20px;border:1px solid var(--mute);border-radius:50%;opacity:.6}
+.s-cover-decor::after{content:'\2731';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-serif);font-size:48px;color:var(--accent);font-style:italic;font-weight:300}
+.s-cover h1{font-size:clamp(52px,8.5vw,128px);max-width:13ch;position:relative;z-index:1;line-height:.96}
+.s-cover h1 em{font-family:var(--font-serif);font-style:italic;color:var(--accent)}
+.s-cover-tagline{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(16px,1.6vw,22px);color:var(--mute);max-width:480px;line-height:1.4}
+.s-cover-bot{display:grid;grid-template-columns:repeat(4,1fr);gap:5vmin;align-items:end;padding-top:18px;border-top:1px solid var(--ink)}
+.s-cover-bot .item{display:flex;flex-direction:column;gap:5px}
 
-  /* SLIDE 3 RELEASES */
-  .rel-hero{
-    border:3px solid var(--lime);padding:clamp(14px,2.4vw,22px);
-    display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap;
-    background:linear-gradient(120deg,rgba(255,88,38,.16),rgba(208,245,58,.10));
-    margin-bottom:10px;
-  }
-  .rel-list{display:flex;flex-direction:column}
-  .rel-row{
-    display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:baseline;
-    padding:8px 4px;border-top:2px solid rgba(255,255,255,.18);
-    transition:padding-left .2s var(--pop),color .2s;
-  }
-  .rel-row:hover{padding-left:14px;color:var(--lime)}
-  .rel-row .t{font-family:var(--font-display);font-size:clamp(20px,2.6vw,32px);text-transform:uppercase;line-height:1}
-  .rel-row .ty{font-family:var(--font-pixel);font-size:17px;letter-spacing:1px;text-transform:uppercase;opacity:.8}
-  .rel-row .yr{font-family:var(--font-pixel);font-size:20px;letter-spacing:1px;color:var(--orange)}
+/* Cover start button — sits bottom-right of center area */
+.s-cover-start{position:absolute;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-decoration:none;color:var(--ink);cursor:pointer;padding:14px 0 14px 28px;transition:gap .35s var(--ee);z-index:2}
+.s-cover-start:hover{gap:12px}
+.s-cover-start .sb-num{font-family:var(--font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.s-cover-start .sb-label{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(20px,1.9vw,28px);line-height:1;color:var(--ink);letter-spacing:-.01em;transition:color .25s}
+.s-cover-start .sb-label em{font-style:italic;color:var(--accent)}
+.s-cover-start:hover .sb-label{color:var(--accent)}
+.s-cover-start .sb-arrow{width:64px;height:14px;color:var(--mute);transition:color .25s,transform .4s var(--ee);overflow:hidden;display:block}
+.s-cover-start .sb-arrow svg{width:100%;height:100%;display:block;transition:transform .5s var(--ee)}
+.s-cover-start:hover .sb-arrow{color:var(--accent)}
+.s-cover-start:hover .sb-arrow svg{transform:translateX(6px)}
+.s-cover-bot .item .lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.s-cover-bot .item .val{font-family:var(--font-serif);font-weight:400;font-size:18px;letter-spacing:-.005em;color:var(--ink)}
+.s-cover-bot .item .val em{font-style:italic;color:var(--accent)}
 
-  /* SLIDE 4 STATS */
-  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border:3px solid var(--ink);background:var(--ink)}
-  .stat{background:var(--lime);color:var(--ink);padding:clamp(12px,2vw,22px);min-height:80px;display:flex;flex-direction:column;justify-content:center}
-  .stat .n{font-family:var(--font-display);font-size:clamp(38px,5.2vw,74px);line-height:.82;letter-spacing:-1px}
-  .stat .l{font-family:var(--font-pixel);font-size:clamp(14px,1.5vw,18px);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px}
-  .stat:hover{background:var(--orange)}
-  .stat:hover .n{color:var(--ink)}
+/* ====== SLIDE 2 — FOREWORD ====== */
+.s-foreword{justify-content:center}
+.s-foreword-grid{display:grid;grid-template-columns:1fr 2fr;gap:6vmin;align-items:start}
+.s-foreword-side{display:flex;flex-direction:column;gap:18px;padding-top:8px;position:sticky;top:0}
+.s-foreword-side .marker{font-family:var(--font-mono);font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.s-foreword-side h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(36px,4.5vw,60px);line-height:1;letter-spacing:-.02em}
+.s-foreword-side h2 em{font-style:italic;color:var(--accent)}
+.s-foreword-side .meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--mute);text-transform:uppercase;border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+.s-foreword-body{display:flex;flex-direction:column;gap:32px;padding-top:8px;max-width:640px}
+.fw-lede{font-family:var(--font-serif);font-weight:300;font-size:clamp(17px,1.6vw,22px);line-height:1.55;color:var(--ink);letter-spacing:-.005em}
+.fw-lede em{font-style:italic;color:var(--accent)}
+.fw-lede::first-letter{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:4.5em;line-height:.85;float:left;margin:8px 12px 0 0;color:var(--accent)}
+.fw-hero{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(28px,3.6vw,52px);line-height:1.05;letter-spacing:-.025em;color:var(--ink);padding:24px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);position:relative}
+.fw-hero em{font-style:italic;color:var(--accent);font-weight:300}
+.fw-hero::before{content:'\201C';position:absolute;top:6px;left:-30px;font-family:var(--font-serif);font-style:italic;font-size:48px;color:var(--accent);font-weight:300;line-height:1}
+.fw-close{font-family:var(--font-serif);font-weight:300;font-size:clamp(15px,1.35vw,18px);line-height:1.6;color:var(--ink-2);letter-spacing:-.005em}
+.fw-close em{font-style:italic;color:var(--ink)}
+.fw-sig{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:18px;color:var(--mute);text-align:right;margin-top:8px}
+.fw-sig em{color:var(--accent);font-style:italic}
 
-  /* SLIDE 5 PRESS */
-  .quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .quote{border:3px solid var(--ink);padding:clamp(13px,2vw,22px);position:relative;background:var(--white)}
-  .quote .mk{font-family:var(--font-display);font-size:54px;line-height:.5;color:var(--orange);height:.5em;display:block}
-  .quote p{font-size:clamp(16px,1.8vw,20px);font-weight:600;line-height:1.3;margin:4px 0 9px}
-  .quote .src{font-family:var(--font-pixel);font-size:17px;letter-spacing:1.5px;text-transform:uppercase}
-  .quote:nth-child(2),.quote:nth-child(3){background:var(--lime)}
+/* ====== SLIDE 3 — PLATE I (full-bleed image) ====== */
+.s-plate{padding:0;display:block;align-items:stretch}
+.s-plate-frame{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:1fr;gap:0}
+.s-plate-top{padding:32px 36px;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper);background:transparent;position:relative;z-index:3}
+.s-plate-top.over-light{color:var(--ink)}
+.s-plate-top strong{font-weight:500}
+.s-plate-image{position:relative;overflow:hidden;background:var(--surface)}
+.s-plate-image img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.05);transition:transform 2.4s var(--ee);filter:saturate(.85) contrast(1.04)}
+.slide.active .s-plate-image img{transform:scale(1)}
+.s-plate-image::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,31,58,.35) 0%,transparent 30%,transparent 60%,rgba(45,31,58,.55) 100%);pointer-events:none}
+.s-plate-caption{position:absolute;bottom:90px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--paper);z-index:3;gap:40px}
+.s-plate-caption .ttl{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(36px,5vw,72px);line-height:1;letter-spacing:-.02em;max-width:14ch}
+.s-plate-caption .meta{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;display:flex;flex-direction:column;gap:6px;text-align:right;flex-shrink:0;min-width:160px}
+.s-plate-caption .meta strong{font-weight:500;font-size:13px;letter-spacing:.15em;color:var(--accent-soft)}
+.s-plate-bot{padding:24px 36px;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper);position:relative;z-index:3;border-top:1px solid rgba(250,248,252,.2);display:flex;justify-content:space-between}
 
-  /* SLIDE 6 TOUR */
-  .tour-list{display:flex;flex-direction:column;border-top:3px solid var(--orange)}
-  .tour-row{
-    display:grid;grid-template-columns:auto 1fr auto auto;gap:clamp(12px,2.2vw,30px);align-items:center;
-    padding:9px 4px;border-bottom:2px solid rgba(255,255,255,.16);
-    transition:background .2s,padding-left .2s var(--pop);
-  }
-  .tour-row:hover{background:rgba(255,88,38,.12);padding-left:12px}
-  .tour-row .date{font-family:var(--font-pixel);font-size:clamp(17px,1.9vw,22px);letter-spacing:1px;color:var(--lime);white-space:nowrap}
-  .tour-row .city{font-family:var(--font-display);font-size:clamp(20px,2.8vw,34px);text-transform:uppercase;line-height:1}
-  .tour-row .venue{font-family:var(--font-pixel);font-size:17px;letter-spacing:1px;text-transform:uppercase;opacity:.8;text-align:right}
-  .status{
-    font-family:var(--font-pixel);font-size:16px;letter-spacing:1.5px;text-transform:uppercase;
-    padding:4px 11px 2px;border:2px solid currentColor;white-space:nowrap;text-align:center;justify-self:end;
-  }
-  .status.sold{background:var(--orange);color:var(--ink);border-color:var(--ink)}
-  .status.few{background:var(--pink);color:var(--ink);border-color:var(--ink)}
-  .status.on{color:var(--lime)}
+/* ====== SLIDE 4 — INDEX ====== */
+.s-index{justify-content:center}
+.s-index-head{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:24px;border-bottom:1px solid var(--ink);gap:40px;flex-wrap:wrap}
+.s-index-head h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(48px,7vw,100px);line-height:.95;letter-spacing:-.025em;flex:1;min-width:280px}
+.s-index-head h2 em{font-style:italic;color:var(--accent)}
+.s-index-head .meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);text-align:right;display:flex;flex-direction:column;gap:8px}
+.s-index-head .meta strong{color:var(--ink);font-size:14px;letter-spacing:.18em}
+.s-index-list{margin-top:32px;display:flex;flex-direction:column}
+.s-index-row{display:grid;grid-template-columns:60px 1fr 1.2fr 100px;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line);transition:padding .3s var(--ee),background .3s var(--ee);cursor:pointer}
+.s-index-row:hover{padding-left:14px;background:linear-gradient(90deg,var(--surface-2) 0%,transparent 100%)}
+.s-index-row .num{font-family:var(--font-mono);font-size:13px;letter-spacing:.18em;color:var(--mute);font-weight:500}
+.s-index-row .ttl{font-family:var(--font-serif);font-weight:300;font-size:clamp(20px,2vw,28px);letter-spacing:-.005em;color:var(--ink);line-height:1.15}
+.s-index-row .ttl em{font-style:italic;color:var(--accent)}
+.s-index-row .desc{font-family:var(--font-sans);font-size:13px;color:var(--mute);line-height:1.45}
+.s-index-row .yr{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--mute);text-align:right;font-weight:500}
+.s-index-row:hover .ttl{color:var(--accent)}
 
-  /* SLIDE 7 GALLERY: portrait press photos, dynamic height, scrolls sideways so the shots can stay large */
-  .gal-strip{
-    display:flex;gap:14px;margin-top:14px;
-    height:clamp(360px, 56vh, 900px);     /* dynamic: up to 900, never below 360 */
-    overflow-x:auto;overflow-y:hidden;
-    scroll-snap-type:x proximity;padding-bottom:12px;
-    scrollbar-width:thin;scrollbar-color:var(--ink) transparent;
-  }
-  .gal-strip::-webkit-scrollbar{height:10px}
-  .gal-strip::-webkit-scrollbar-track{background:rgba(11,11,11,.12)}
-  .gal-strip::-webkit-scrollbar-thumb{background:var(--ink)}
-  /* slide 07 step arrows: scroll the strip one photo at a time */
-  .gal-nav{display:flex;gap:8px}
-  .gal-arrow{
-    width:44px;height:44px;display:grid;place-items:center;
-    background:var(--ink);color:var(--lime);border:3px solid var(--ink);
-    transition:transform .16s var(--snap),opacity .16s,background .16s,color .16s;
-  }
-  .gal-arrow:hover{background:var(--lime);color:var(--ink)}
-  .gal-arrow:active{transform:scale(.9)}
-  .gal-arrow:disabled{opacity:.32;cursor:not-allowed}
-  .gal-arrow svg{width:22px;height:22px}
-  .shot{
-    flex:0 0 auto;height:100%;aspect-ratio:3/4;       /* portrait */
-    scroll-snap-align:start;position:relative;overflow:hidden;
-    border:3px solid var(--ink);display:flex;align-items:flex-end;
-    transition:transform .25s var(--snap);
-  }
-  .shot:hover{transform:translateY(-6px)}
-  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-  .shot .cap{
-    position:relative;z-index:1;width:100%;font-family:var(--font-pixel);font-size:15px;letter-spacing:1px;
-    padding:6px 9px 4px;background:var(--ink);color:var(--lime);text-transform:uppercase;
-  }
-  /* coloured block shows while the sample photo loads or if it is blocked */
-  .shot:nth-child(1){background:linear-gradient(150deg,var(--orange),var(--pink))}
-  .shot:nth-child(2){background:linear-gradient(150deg,var(--lime),var(--orange))}
-  .shot:nth-child(3){background:linear-gradient(150deg,var(--pink),var(--lime))}
-  .shot:nth-child(4){background:linear-gradient(150deg,var(--orange),var(--lime))}
-  .shot:nth-child(5){background:linear-gradient(150deg,var(--lime),var(--pink))}
-  .shot:nth-child(6){background:linear-gradient(150deg,var(--pink),var(--orange))}
-  .shot:nth-child(7){background:linear-gradient(150deg,var(--orange),var(--ink))}
-  .shot:nth-child(8){background:linear-gradient(150deg,var(--lime),var(--ink))}
+/* ====== SLIDE 5 — SPREAD (image + prose + pull quote) ====== */
+.s-spread{justify-content:center}
+.s-spread-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vmin;align-items:stretch;flex:1}
+.s-spread-img{position:relative;overflow:hidden;background:var(--surface);min-height:400px}
+.s-spread-img img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 2s var(--ee);display:block;filter:saturate(.9)}
+.slide.active .s-spread-img img{transform:scale(1)}
+.s-spread-img .label{position:absolute;top:24px;left:24px;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper);background:rgba(45,31,58,.7);padding:6px 12px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.s-spread-text{display:flex;flex-direction:column;justify-content:center;gap:24px;padding-right:2vmin}
+.s-spread-text h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(34px,4.5vw,60px);line-height:1.02;letter-spacing:-.025em}
+.s-spread-text h2 em{font-style:italic;color:var(--accent)}
+.s-spread-text .lead{font-family:var(--font-serif);font-weight:300;font-size:clamp(15px,1.3vw,18px);line-height:1.65;color:var(--ink-2)}
+.s-spread-text .lead em{font-style:italic;color:var(--ink)}
+.s-pullquote{margin-top:8px;padding:24px 0 24px 28px;border-left:3px solid var(--accent);font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(17px,1.6vw,24px);line-height:1.4;color:var(--ink);position:relative}
+.s-pullquote::before{content:'\201C';position:absolute;top:-8px;left:14px;font-size:48px;color:var(--accent);font-family:var(--font-serif)}
+.s-pullquote .attr{display:block;margin-top:14px;font-family:var(--font-mono);font-style:normal;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);font-weight:500}
 
-  /* SLIDE 8 CONTACT */
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .cc{border:3px solid var(--lime);padding:11px 14px;background:rgba(208,245,58,.06)}
-  .cc .k{font-family:var(--font-pixel);font-size:16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lime)}
-  .cc .v{font-family:var(--font-display);font-size:clamp(20px,2.3vw,28px);text-transform:uppercase;line-height:1.05;margin-top:4px}
-  .cc a:hover{color:var(--orange)}
-  .socials{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+/* ====== SLIDE 6 — SELECTED WORKS (3-image grid) ====== */
+.s-works{gap:2.2vmin;justify-content:center}
+.slide-inner.s-works{padding:60px 6vmin 50px}
+.s-works-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.s-works-head h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(32px,4vw,54px);line-height:1;letter-spacing:-.025em;flex:1;min-width:260px}
+.s-works-head h2 em{font-style:italic;color:var(--accent)}
+.s-works-head .lead{font-family:var(--font-serif);font-weight:300;font-style:italic;font-size:clamp(13px,1.1vw,15px);line-height:1.5;color:var(--mute);max-width:340px}
+.works-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;width:100%}
+.work-card{display:flex;flex-direction:column;gap:10px;cursor:pointer;text-decoration:none;color:inherit}
+.work-card .wc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--surface)}
+.work-card .wc-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ee);display:block;filter:saturate(.88)}
+.work-card:hover .wc-img img{transform:scale(1.05)}
+.work-card .wc-img::after{content:'';position:absolute;inset:0;background:rgba(45,31,58,0);transition:background .4s}
+.work-card:hover .wc-img::after{background:rgba(45,31,58,.12)}
+.work-card .wc-meta{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.work-card .wc-meta .num{font-weight:500}
+.work-card .wc-title{font-family:var(--font-serif);font-weight:300;font-size:clamp(18px,1.7vw,24px);line-height:1.1;letter-spacing:-.01em;color:var(--ink);transition:color .3s}
+.work-card:hover .wc-title{color:var(--accent)}
+.work-card .wc-title em{font-style:italic;color:var(--accent)}
+.work-card .wc-desc{font-family:var(--font-sans);font-size:12.5px;color:var(--mute);line-height:1.45}
+.work-card .wc-link{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);font-weight:500;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--ink);padding-bottom:4px;align-self:flex-start;transition:all .3s}
+.work-card:hover .wc-link{color:var(--accent);border-color:var(--accent);gap:12px}
 
-  /* SLIDE 9 CROSS PROMO */
-  .promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .promo{
-    border:3px solid var(--lime);padding:15px;background:var(--ink-2);
-    display:flex;flex-direction:column;gap:7px;min-height:128px;
-    transition:transform .22s var(--snap),box-shadow .22s var(--pop);
-  }
-  .promo:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--orange)}
-  .promo .tm{font-family:var(--font-pixel);font-size:16px;letter-spacing:1.5px;color:var(--orange)}
-  .promo .nm{font-family:var(--font-display);font-size:clamp(22px,2.6vw,34px);text-transform:uppercase;line-height:.94;color:var(--lime)}
-  .promo .ds{font-size:14px;opacity:.82;margin-top:auto}
+/* ====== SLIDE 7 — PRESS / RECOGNITION ====== */
+.s-press{justify-content:center;gap:5vmin}
+.s-press-head{max-width:760px}
+.s-press-head h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(40px,5.5vw,76px);line-height:1;letter-spacing:-.025em;margin-top:18px}
+.s-press-head h2 em{font-style:italic;color:var(--accent)}
+.press-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.press-card{padding:28px 32px;border:1px solid var(--line);background:var(--paper);display:flex;flex-direction:column;gap:18px;transition:all .4s var(--ee);position:relative}
+.press-card::before{content:'\201C';position:absolute;top:14px;right:24px;font-family:var(--font-serif);font-size:64px;color:var(--accent);opacity:.18;line-height:1;font-style:italic}
+.press-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 14px 30px rgba(45,31,58,.08)}
+.press-card .pc-quote{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(17px,1.5vw,22px);line-height:1.4;letter-spacing:-.005em;color:var(--ink);position:relative;z-index:1}
+.press-card .pc-attr{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.press-card .pc-attr strong{color:var(--ink);font-weight:500;font-size:11px;letter-spacing:.18em}
+.press-card .pc-stars{color:var(--accent);font-size:13px;letter-spacing:2px}
 
-  /* PREV / NEXT PILLS (desktop) */
-  /* fixed footer bar: static, mirrors the header, never rides the transition */
-  .footerbar{
-    position:fixed;left:0;right:0;bottom:0;z-index:60;
-    height:var(--foot);
-    display:flex;align-items:center;justify-content:space-between;gap:14px;
-    padding:0 var(--edge);
-    background:var(--ink);
-    border-top:3px solid var(--orange);
-  }
-  .foot-credit{
-    font-family:var(--font-pixel);font-size:16px;letter-spacing:1px;
-    color:rgba(255,255,255,.72);
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
-  }
-  .foot-credit a{color:var(--orange)}
-  .foot-credit a:hover{color:var(--lime)}
-  .nav-pills{display:flex;gap:10px;flex:0 0 auto}
-  .pill{
-    width:44px;height:44px;display:grid;place-items:center;
-    background:var(--ink);color:var(--lime);border:3px solid var(--lime);
-    transition:transform .16s var(--snap),background .16s,color .16s;
-  }
-  .pill:hover{background:var(--lime);color:var(--ink)}
-  .pill:active{transform:scale(.9)}
-  .pill:disabled{opacity:.3;cursor:not-allowed}
-  .pill svg{width:23px;height:23px}
+/* ====== SLIDE 8 — MORE FROM TEMPLATEMO ====== */
+.s-more{gap:4vmin;justify-content:center}
+.s-more-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--ink)}
+.s-more-head .sm-l{flex:1;min-width:300px}
+.s-more-head h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(36px,4.6vw,60px);line-height:1;letter-spacing:-.025em;margin-top:14px}
+.s-more-head h2 em{font-style:italic;color:var(--accent)}
+.s-more-head .sm-r{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:15px;color:var(--mute);max-width:340px;line-height:1.55}
+.s-more-head .sm-r a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);transition:opacity .25s}
+.s-more-head .sm-r a:hover{opacity:.7}
+.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.more-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid var(--line);background:var(--paper);overflow:hidden;transition:transform .4s var(--ee),border-color .4s var(--ee),box-shadow .4s var(--ee);opacity:0}
+.more-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 30px rgba(45,31,58,.1)}
+@keyframes moreCardIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .more-card{animation:moreCardIn 1s var(--ee) forwards}
+.slide.active .more-card:nth-child(1){animation-delay:.6s}
+.slide.active .more-card:nth-child(2){animation-delay:.75s}
+.slide.active .more-card:nth-child(3){animation-delay:.9s}
+.slide.active .more-card:nth-child(4){animation-delay:1.05s}
+.more-card .mc-thumb{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--surface);border-bottom:1px solid var(--line)}
+.more-card .mc-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .8s var(--ee);display:block;filter:saturate(.9)}
+.more-card:hover .mc-thumb img{transform:scale(1.05);transform-origin:top center}
+.more-card .mc-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.more-card .mc-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:8px;font-weight:500}
+.more-card .mc-tag .pip{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.more-card .mc-title{font-family:var(--font-serif);font-weight:400;font-size:20px;letter-spacing:-.005em;line-height:1.15;color:var(--ink)}
+.more-card .mc-desc{font-family:var(--font-sans);font-size:12.5px;line-height:1.5;color:var(--mute);flex:1}
+.more-card .mc-cta{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);font-weight:500;display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid var(--ink);padding-bottom:4px;align-self:flex-start;transition:all .3s}
+.more-card:hover .mc-cta{color:var(--accent);border-color:var(--accent);gap:10px}
 
-  /* POPUP NAV MENU */
-  .nav-pop{
-    position:fixed;inset:0;z-index:90;
-    background:var(--ink);
-    display:flex;flex-direction:column;
-    transform:translateY(-100%);
-    transition:transform .5s var(--pop);
-    overflow-y:auto;                 /* landscape / short viewport safe */
-    padding:80px var(--edge);        /* generous top + bottom */
-  }
-  .nav-pop.open{transform:none}
-  .nav-pop .nav-head{
-    display:flex;justify-content:space-between;align-items:center;gap:18px;
-    border-bottom:3px solid var(--lime);padding-bottom:16px;margin-bottom:auto;
-  }
-  .nav-pop .x{
-    font-family:var(--font-pixel);font-size:23px;letter-spacing:2px;
-    background:var(--lime);color:var(--ink);padding:5px 15px 3px;border:3px solid var(--ink);
-    box-shadow:4px 4px 0 var(--orange);
-  }
-  .nav-list{list-style:none;display:flex;flex-direction:column;gap:2px;margin:auto 0}
-  .nav-list li a{
-    display:flex;align-items:baseline;gap:16px;
-    font-family:var(--font-display);font-size:clamp(22px,3.6vw,42px);
-    text-transform:uppercase;line-height:1.02;color:var(--white);
-    padding:4px 0;transition:color .15s,transform .2s var(--pop);
-  }
-  .nav-list li a .ix{font-family:var(--font-pixel);font-size:clamp(17px,1.9vw,24px);color:var(--orange);min-width:2.4em}
-  .nav-list li a:hover{color:var(--lime);transform:translateX(14px)}
-  .nav-list li a:hover .ix{color:var(--lime)}
-  .nav-foot{
-    margin-top:auto;padding-top:16px;border-top:3px solid var(--orange);
-    font-family:var(--font-pixel);font-size:18px;letter-spacing:1px;color:rgba(255,255,255,.7);
-  }
-  .nav-foot a{color:var(--orange)}
+/* ====== SLIDE 9 — COLOPHON / CONTACT ====== */
+.s-colophon{align-items:stretch;justify-content:stretch;display:grid;grid-template-rows:auto 1fr auto;gap:5vmin;padding:90px 6vmin 80px}
+.s-colophon-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid var(--ink)}
+.s-colophon-top .marker{font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px}
+.s-colophon-top .marker::before{content:'';width:32px;height:1px;background:var(--accent)}
+.s-colophon-top .meta{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.s-colophon-center{display:grid;grid-template-columns:1.5fr 1fr;gap:6vmin;align-items:center}
+.s-colophon-headline h2{font-family:var(--font-serif);font-weight:300;font-size:clamp(54px,8.5vw,140px);line-height:.95;letter-spacing:-.03em;color:var(--ink)}
+.s-colophon-headline h2 em{font-style:italic;color:var(--accent)}
+.s-colophon-headline h2 .ornament{font-family:var(--font-serif);font-style:italic;color:var(--mute);font-weight:300}
+.s-colophon-headline p a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;transition:opacity .25s;font-style:normal}
+.s-colophon-headline p a:hover{opacity:.7}
+.s-colophon-headline p{margin-top:24px;font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(16px,1.5vw,22px);line-height:1.5;color:var(--mute);max-width:480px}
+.s-colophon-cta{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+.s-colophon-contact{display:flex;flex-direction:column;gap:18px;width:100%}
+.s-colophon-contact .row{display:flex;flex-direction:column;gap:4px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.s-colophon-contact .row .lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.s-colophon-contact .row .val{font-family:var(--font-serif);font-weight:400;font-size:18px;letter-spacing:-.005em;color:var(--ink)}
+.s-colophon-contact .row .val em{font-style:italic;color:var(--accent)}
+.s-colophon-contact .row .val a{color:inherit;text-decoration:none;transition:color .25s}
+.s-colophon-contact .row .val a:hover{color:var(--accent)}
+.s-colophon-cta-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.s-colophon-bot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--ink);font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);flex-wrap:wrap;gap:14px}
+.s-colophon-bot strong{color:var(--ink);font-weight:500}
+.s-colophon-notes{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:14px;line-height:1.55;color:var(--mute);max-width:780px;padding-top:18px;border-top:1px solid var(--line)}
+.s-colophon-notes em{font-style:italic;color:var(--ink);font-weight:400}
+.s-colophon-notes a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);transition:opacity .25s}
+.s-colophon-notes a:hover{opacity:.7}
 
-  /* REVEALS */
-  [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .46s var(--pop),transform .46s var(--pop)}
-  [data-reveal].in{opacity:1;transform:none}
-  .slide.out [data-reveal]{transition:opacity .26s var(--pop),transform .26s var(--pop)}  /* snappy staggered exit */
+/* ====== Slide-level scrollbar ====== */
+.slide{scrollbar-width:thin;scrollbar-color:var(--mute-soft) transparent}
+.slide::-webkit-scrollbar{width:8px;height:8px}
+.slide::-webkit-scrollbar-track{background:transparent}
+.slide::-webkit-scrollbar-thumb{background:var(--mute-soft);border-radius:0;border:2px solid transparent;background-clip:padding-box}
+.slide::-webkit-scrollbar-thumb:hover{background:var(--accent);background-clip:padding-box;border:2px solid transparent}
 
-  /* RESPONSIVE */
-  @media (max-width:900px){
-    .bio-grid{grid-template-columns:1fr}
-    .quote-grid,.contact-grid{grid-template-columns:1fr}
-    .stat-grid{grid-template-columns:repeat(2,1fr)}
-    .gal-strip{height:clamp(360px, 54vh, 700px)}
-    .promo-grid{grid-template-columns:1fr}
-    .rel-row{grid-template-columns:1fr auto;row-gap:2px}
-    .rel-row .ty{grid-column:1;opacity:.7}
-    .tour-row{grid-template-columns:1fr auto;row-gap:4px}
-    .tour-row .venue{grid-column:1;text-align:left}
-    .tour-row .status{grid-column:2;grid-row:1}
-  }
-  @media (max-width:640px){
-    :root{--bar:54px;--foot:46px}
-    .counter{display:none}
-    .foot-credit .fc-long{display:none}
-    .foot-credit{font-size:14px}
-    .pill{width:40px;height:40px}
-    .pill svg{width:21px;height:21px}
-    .gal-strip{height:clamp(360px, 56vh, 520px)}
-    .cover .floatstar{display:none}
-  }
+/* ====== In-flow footer (mobile) ====== */
+.slide-footer{display:none}
 
-  /* REDUCED MOTION */
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
-    .marquee .track{animation:none;transform:none}
-    .spin{animation:none}
-    [data-reveal]{opacity:1;transform:none}
-    .slide,.slide.active,.slide.leaving{transition-delay:0s !important;transition-duration:.001ms !important}
-  }
+/* ====== Responsive ====== */
+@media (max-width:1024px){
+  .s-foreword-grid{grid-template-columns:1fr;gap:32px}
+  .s-foreword-side{position:static}
+  .fw-hero::before{left:-22px}
+  .s-spread-grid{grid-template-columns:1fr;gap:32px}
+  .works-grid{grid-template-columns:repeat(2,1fr);gap:20px;max-width:640px}
+  .work-card{gap:10px}
+  .more-grid{grid-template-columns:repeat(2,1fr)}
+  .press-grid{grid-template-columns:1fr}
+  .s-cover-bot{grid-template-columns:repeat(2,1fr);gap:24px}
+  .s-colophon-center{grid-template-columns:1fr;gap:32px}
+}
+@media (max-width:640px){
+  html,body{overflow:hidden}
+  .slide-inner,.s-cover,.s-colophon{padding:72px 18px 24px}
+  .brand{top:20px;left:20px;font-size:18px}
+  .nav{top:18px;right:18px;gap:4px}
+  .nav button{width:32px;height:32px;font-size:12px}
+  .counter{padding:0 10px;font-size:10px;height:32px;min-width:54px}
+  .section-tag,.tm-credit{display:none}
+  .works-grid{grid-template-columns:repeat(2,1fr);gap:14px;max-width:none}
+  .work-card{gap:8px}
+  .work-card .wc-desc{display:none}
+  .work-card .wc-title{font-size:18px}
+  .more-grid{grid-template-columns:1fr}
+  .s-cover-bot{grid-template-columns:1fr 1fr;gap:18px}
+  .s-cover-start{position:static;align-items:flex-start;padding:14px 0 0;margin-top:14px;border-top:1px solid var(--line)}
+  .s-cover-start .sb-label{font-size:22px}
+  .s-cover-start .sb-arrow{width:48px}
+  .s-plate-caption{bottom:80px;left:20px;right:20px;flex-direction:column;align-items:flex-start;gap:14px}
+  .s-plate-caption .meta{text-align:left}
+  .s-plate-top,.s-plate-bot{padding:18px 20px}
+  .s-index-row{grid-template-columns:40px 1fr 70px;gap:14px}
+  .s-index-row .desc{display:none}
+  .fw-lede::first-letter{font-size:3.8em}
+  .fw-hero::before{display:none}
+  .fw-hero{padding:18px 0}
+  /* In-flow footer */
+  .slide-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:24px 0 0;margin-top:auto;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);flex-wrap:wrap}
+  .slide-footer .sf-section{display:flex;align-items:center;gap:8px}
+  .slide-footer .sf-section .pip{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .slide-footer .sf-credit{display:flex;align-items:center;gap:7px;color:var(--mute);text-decoration:none}
+  .slide-footer .sf-credit .pip{width:5px;height:5px;border-radius:50%;background:var(--mute)}
+  .menu-panel{width:94vw;max-height:88vh}
+  .menu-header{padding:20px 22px 16px}
+  .menu-item{padding:12px 22px;gap:14px}
+  .menu-item:hover{padding-left:28px}
+  .menu-item .mi-num{width:24px;font-size:10px}
+  .menu-item .mi-label{font-size:16px}
+  .menu-footer{padding:14px 22px 18px;font-size:9px}
+}
+@media (max-height:500px) and (orientation:landscape){
+  .slide-inner,.s-cover,.s-colophon{padding:60px 28px 40px}
+  .nav{top:14px;right:14px}
+  .brand{top:14px;left:16px}
+  .section-tag{bottom:14px;left:16px}
+  .tm-credit{bottom:14px;right:16px}
+}
 </style>
 </head>
 <body>
 
-<!-- ===================== TOP BAR ===================== -->
-<header class="topbar">
-  <a href="#" class="mark" data-goto="0" aria-label="HYPRLUV, go to cover">HYPR<b>LUV</b><span class="dot"></span></a>
-  <div class="topright">
-    <span class="counter"><span class="now">01</span> / 09</span>
-    <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false">MENU +</button>
+<div class="brand">
+  <span class="mark"></span>Folio<span class="sub">Mmxxvi</span>
+</div>
+
+<div class="section-tag"><span class="pip"></span><span id="sectionName">Cover</span></div>
+
+<a class="tm-credit" href="https://templatemo.com" target="_blank" rel="nofollow noopener">
+  <span class="tm-dot"></span><span>Design: TemplateMo</span>
+</a>
+
+<div class="deck" id="deck">
+
+  <!-- ============ 1. COVER ============ -->
+  <section class="slide active" data-section="Cover" data-sub="Studio introduction">
+    <div class="slide-inner s-cover">
+      <div class="s-cover-top reveal">
+        <div class="tl">
+          <span>Folio &middot; Volume <strong>I</strong></span>
+          <span>Selected works MMXXVI</span>
+        </div>
+        <div class="tr">
+          <span><strong>Plates 01 / 09</strong></span>
+          <span>Edition of 250</span>
+        </div>
+      </div>
+      <div class="s-cover-center">
+        <div class="s-cover-decor"></div>
+        <h1 class="h-display">
+          <span class="mw"><span>Quiet light,</span></span><br>
+          <span class="mw"><span><em>patient</em> hands.</span></span>
+        </h1>
+        <p class="s-cover-tagline reveal">A small photography studio working between Bangkok and Chiang Mai, documenting the things we keep, and the way they change us.</p>
+        <a class="s-cover-start reveal" data-goto="2" aria-label="Begin reading">
+          <span class="sb-num">01 / 09</span>
+          <span class="sb-label">Begin <em>reading</em></span>
+          <span class="sb-arrow" aria-hidden="true">
+            <svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+              <path d="M1 6h36"/>
+              <path d="M32 1l6 5-6 5"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+      <div class="s-cover-bot">
+        <div class="item reveal">
+          <span class="lbl">Studio</span>
+          <span class="val"><em>Atelier</em> Folio</span>
+        </div>
+        <div class="item reveal">
+          <span class="lbl">Founded</span>
+          <span class="val">MMXVIII</span>
+        </div>
+        <div class="item reveal">
+          <span class="lbl">Discipline</span>
+          <span class="val">Editorial &amp; Still life</span>
+        </div>
+        <div class="item reveal">
+          <span class="lbl">Volume</span>
+          <span class="val"><em>No. 04</em></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. FOREWORD ============ -->
+  <section class="slide" data-section="Foreword" data-sub="A note from the studio">
+    <div class="slide-inner s-foreword">
+      <div class="s-foreword-grid">
+        <aside class="s-foreword-side">
+          <div class="marker reveal">&sect; Foreword</div>
+          <h2 class="reveal">On <em>looking</em>, slowly.</h2>
+          <div class="meta reveal">A note &mdash; by the studio<br>March, MMXXVI</div>
+        </aside>
+        <div class="s-foreword-body">
+          <p class="fw-lede reveal">We began this studio with a single, quiet conviction &mdash; that the camera, in the right hour, can be an act of <em>attention</em> rather than acquisition.</p>
+          <p class="fw-hero reveal">The most honest photographs<br>are not made.<br>They are <em>waited for</em>.</p>
+          <p class="fw-close reveal">This volume gathers the work we returned to most often this year. Some of it was commissioned. Most of it was made simply because the light asked us to.</p>
+          <p class="fw-sig reveal">&mdash; <em>Atelier</em> Folio</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. PLATE I — full-bleed image ============ -->
+  <section class="slide" data-section="Plate I" data-sub="Featured commission">
+    <div class="slide-inner s-plate">
+      <div class="s-plate-frame">
+        <div class="s-plate-top">
+          <span><strong>Plate I</strong> &middot; The Long Afternoon</span>
+          <span>Commissioned by Folio Editorial</span>
+        </div>
+        <div class="s-plate-image">
+          <img src="images/featured-pic-01.jpg" alt="Featured photograph: still life on a sunlit window sill">
+        </div>
+        <div class="s-plate-bot">
+          <span>Format &middot; 645 medium format</span>
+          <span>Bangkok, MMXXVI</span>
+          <span>03 / 09</span>
+        </div>
+      </div>
+      <div class="s-plate-caption">
+        <h2 class="ttl">The long afternoon, captured at <em>4:17pm</em>.</h2>
+        <div class="meta">
+          <strong>Plate I</strong>
+          <span>645 Medium Format</span>
+          <span>Natural light only</span>
+          <span>April MMXXVI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. INDEX ============ -->
+  <section class="slide" data-section="Index" data-sub="Plates in this volume">
+    <div class="slide-inner s-index">
+      <div class="s-index-head">
+        <h2 class="reveal">Index of <em>plates</em></h2>
+        <div class="meta reveal">
+          <span><strong>Volume I &middot; MMXXVI</strong></span>
+          <span>Nine plates &middot; Six commissions</span>
+        </div>
+      </div>
+      <div class="s-index-list">
+        <a class="s-index-row reveal">
+          <span class="num">01 &mdash;</span>
+          <span class="ttl">The <em>quiet</em> hour</span>
+          <span class="desc">An interior study of light moving across a room from morning to dusk.</span>
+          <span class="yr">MMXXVI</span>
+        </a>
+        <a class="s-index-row reveal">
+          <span class="num">02 &mdash;</span>
+          <span class="ttl">Studies in <em>linen</em></span>
+          <span class="desc">Editorial commission for a small textile maison in Chiang Mai.</span>
+          <span class="yr">MMXXVI</span>
+        </a>
+        <a class="s-index-row reveal">
+          <span class="num">03 &mdash;</span>
+          <span class="ttl">The long <em>afternoon</em></span>
+          <span class="desc">The featured plate &mdash; a single afternoon, photographed in fragments.</span>
+          <span class="yr">MMXXVI</span>
+        </a>
+        <a class="s-index-row reveal">
+          <span class="num">04 &mdash;</span>
+          <span class="ttl">Vessels &amp; <em>vessels</em></span>
+          <span class="desc">A still-life series for a ceramicist's first European exhibition.</span>
+          <span class="yr">MMXXV</span>
+        </a>
+        <a class="s-index-row reveal">
+          <span class="num">05 &mdash;</span>
+          <span class="ttl">After the <em>storm</em></span>
+          <span class="desc">Personal work &mdash; the garden, photographed three days after monsoon.</span>
+          <span class="yr">MMXXV</span>
+        </a>
+        <a class="s-index-row reveal">
+          <span class="num">06 &mdash;</span>
+          <span class="ttl">Hands at <em>rest</em></span>
+          <span class="desc">A portrait series for a slow-fashion campaign in Tokyo.</span>
+          <span class="yr">MMXXV</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. SPREAD ============ -->
+  <section class="slide" data-section="Approach" data-sub="How we work">
+    <div class="slide-inner s-spread">
+      <div class="s-spread-grid">
+        <div class="s-spread-img reveal">
+          <span class="label">&sect; Plate II &middot; Studies in Linen</span>
+          <img src="images/editorial-pic-01.jpg" alt="Editorial photograph from the Studies in Linen series">
+        </div>
+        <div class="s-spread-text">
+          <div class="eyebrow reveal">Our approach</div>
+          <h2 class="reveal">A <em>method</em> built on patience and proximity.</h2>
+          <p class="lead reveal">Most of our work is shot on medium format film, in natural light, with no team. The subject and the studio: that is the entire crew. We believe the best frames arrive when nothing is rushed and everyone in the room can <em>breathe</em>.</p>
+          <blockquote class="s-pullquote reveal">
+            We do not chase the perfect light. We arrive early, wait for it, and trust that it knows the way.
+            <span class="attr">&mdash; Studio philosophy</span>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. SELECTED WORKS ============ -->
+  <section class="slide" data-section="Selected works" data-sub="Three from the year">
+    <div class="slide-inner s-works">
+      <div class="s-works-head">
+        <h2 class="reveal">Selected <em>works</em></h2>
+        <p class="lead reveal">Three commissions from this year that captured something of how the studio thinks. Each is a small story about light, time, and care.</p>
+      </div>
+      <div class="works-grid">
+        <a class="work-card reveal">
+          <div class="wc-img"><img src="images/selected-work-01.jpg" alt="Quiet Hour series — featured photograph"></div>
+          <div class="wc-meta"><span class="num">No. 01</span><span>Editorial</span></div>
+          <div class="wc-title">The <em>quiet</em> hour</div>
+          <p class="wc-desc">An interior study of late afternoon light, photographed across a single day in March.</p>
+          <span class="wc-link">View series &rarr;</span>
+        </a>
+        <a class="work-card reveal">
+          <div class="wc-img"><img src="images/selected-work-02.jpg" alt="Studies in Linen — editorial commission"></div>
+          <div class="wc-meta"><span class="num">No. 02</span><span>Commission</span></div>
+          <div class="wc-title">Studies in <em>linen</em></div>
+          <p class="wc-desc">A small textile maison in Chiang Mai. Six weeks. Forty-three frames. Three published.</p>
+          <span class="wc-link">View series &rarr;</span>
+        </a>
+        <a class="work-card reveal">
+          <div class="wc-img"><img src="images/selected-work-03.jpg" alt="Vessels and Vessels — still life series"></div>
+          <div class="wc-meta"><span class="num">No. 03</span><span>Exhibition</span></div>
+          <div class="wc-title">Vessels &amp; <em>vessels</em></div>
+          <p class="wc-desc">Still-life work for a ceramicist's first European exhibition. Shown in Antwerp, autumn.</p>
+          <span class="wc-link">View series &rarr;</span>
+        </a>
+        <a class="work-card reveal">
+          <div class="wc-img"><img src="images/selected-work-04.jpg" alt="Hands at Rest — portrait series"></div>
+          <div class="wc-meta"><span class="num">No. 04</span><span>Portrait</span></div>
+          <div class="wc-title">Hands at <em>rest</em></div>
+          <p class="wc-desc">A quiet portrait series for a slow-fashion campaign in Tokyo. Six artisans, photographed at work.</p>
+          <span class="wc-link">View series &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. PRESS ============ -->
+  <section class="slide" data-section="Press" data-sub="What's been said">
+    <div class="slide-inner s-press">
+      <div class="s-press-head">
+        <div class="eyebrow reveal">Press &amp; Recognition</div>
+        <h2 class="reveal">Words that <em>found</em> the work.</h2>
+      </div>
+      <div class="press-grid">
+        <div class="press-card reveal">
+          <p class="pc-quote">A studio that has rediscovered what photography can do when it is allowed, simply, to wait.</p>
+          <div class="pc-attr">
+            <strong>Cereal Magazine</strong>
+            <span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="press-card reveal">
+          <p class="pc-quote">There is a softness to Folio's work that feels almost out of step with our times &mdash; in the best possible sense.</p>
+          <div class="pc-attr">
+            <strong>Kinfolk &middot; Issue 47</strong>
+            <span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="press-card reveal">
+          <p class="pc-quote">Their still-life series for the Antwerp exhibition was, quite simply, the most quietly devastating room of the season.</p>
+          <div class="pc-attr">
+            <strong>The Gentlewoman</strong>
+            <span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="press-card reveal">
+          <p class="pc-quote">Atelier Folio works the way the best small studios always have &mdash; with patience, with restraint, and with a careful eye on the door.</p>
+          <div class="pc-attr">
+            <strong>Apartamento</strong>
+            <span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. MORE FROM TEMPLATEMO ============ -->
+  <section class="slide" data-section="More templates" data-sub="From the TemplateMo collection">
+    <div class="slide-inner s-more">
+      <div class="s-more-head">
+        <div class="sm-l">
+          <div class="eyebrow reveal">Also worth seeing</div>
+          <h2 class="reveal">More from <em>TemplateMo</em>.</h2>
+        </div>
+        <p class="sm-r reveal">Four of the latest free HTML &amp; CSS templates from our collection. Browse the full catalog at <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">templatemo.com</a>.</p>
+      </div>
+      <div class="more-grid">
+        <a class="more-card" href="https://templatemo.com/tm-624-lustro-slideshow" target="_blank" rel="nofollow noopener">
+          <div class="mc-thumb"><img src="images/tm-624-lustro-slideshow.jpg" alt="Lustro Slideshow template" loading="lazy"></div>
+          <div class="mc-body">
+            <div class="mc-tag"><span class="pip"></span>TM-624 &middot; Slideshow</div>
+            <div class="mc-title">Lustro Slideshow</div>
+            <div class="mc-desc">A nine-slide product launch deck with dark glassmorphic styling, popup menu, and comparison table.</div>
+            <span class="mc-cta">View template &rarr;</span>
+          </div>
+        </a>
+        <a class="more-card" href="https://templatemo.com/tm-622-clearwave" target="_blank" rel="nofollow noopener">
+          <div class="mc-thumb"><img src="images/tm-622-clearwave.jpg" alt="Clearwave template" loading="lazy"></div>
+          <div class="mc-body">
+            <div class="mc-tag"><span class="pip"></span>TM-622 &middot; SaaS</div>
+            <div class="mc-title">Clearwave</div>
+            <div class="mc-desc">A free SaaS landing page template built with pure HTML, CSS, and JavaScript &mdash; no frameworks.</div>
+            <span class="mc-cta">View template &rarr;</span>
+          </div>
+        </a>
+        <a class="more-card" href="https://templatemo.com/tm-621-luminary" target="_blank" rel="nofollow noopener">
+          <div class="mc-thumb"><img src="images/tm-621-luminary.jpg" alt="Luminary template" loading="lazy"></div>
+          <div class="mc-body">
+            <div class="mc-tag"><span class="pip"></span>TM-621 &middot; SaaS / B2B</div>
+            <div class="mc-title">Luminary</div>
+            <div class="mc-desc">Designed for SaaS platforms, workflow automation tools, and B2B technology product launches.</div>
+            <span class="mc-cta">View template &rarr;</span>
+          </div>
+        </a>
+        <a class="more-card" href="https://templatemo.com/tm-620-compression" target="_blank" rel="nofollow noopener">
+          <div class="mc-thumb"><img src="images/tm-620-compression.jpg" alt="Compression template" loading="lazy"></div>
+          <div class="mc-body">
+            <div class="mc-tag"><span class="pip"></span>TM-620 &middot; Portfolio</div>
+            <div class="mc-title">Compression</div>
+            <div class="mc-desc">A kinetic portfolio template built entirely with CSS Flexbox and hover-driven panel transitions.</div>
+            <span class="mc-cta">View template &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. COLOPHON / CONTACT ============ -->
+  <section class="slide" data-section="Colophon" data-sub="Get in touch">
+    <div class="slide-inner s-colophon">
+      <div class="s-colophon-top">
+        <div class="marker">&sect; Colophon</div>
+        <div class="meta">End of Volume I &middot; MMXXVI</div>
+      </div>
+      <div class="s-colophon-center">
+        <div class="s-colophon-headline">
+          <h2 class="h-display">
+            <span class="mw"><span>Until the <em>next</em></span></span><br>
+            <span class="mw"><span><span class="ornament">good</span> light.</span></span>
+          </h2>
+          <p>If you've reached this last page, thank you for spending the time. The studio is currently booking commissions for autumn MMXXVI, and we'd be glad to hear from you. Photography throughout this volume sourced from <a href="https://unsplash.com" target="_blank" rel="nofollow noopener">Unsplash</a>, with thanks to the contributing photographers.</p>
+        </div>
+        <div class="s-colophon-cta">
+          <div class="s-colophon-contact">
+            <div class="row">
+              <span class="lbl">Studio</span>
+              <span class="val"><em>Atelier</em> Folio</span>
+            </div>
+            <div class="row">
+              <span class="lbl">Email</span>
+              <span class="val"><a href="mailto:hello@atelierfolio.studio">hello@atelierfolio.studio</a></span>
+            </div>
+            <div class="row">
+              <span class="lbl">Located</span>
+              <span class="val">Bangkok &amp; <em>Chiang Mai</em></span>
+            </div>
+          </div>
+          <div class="s-colophon-cta-btns">
+            <a class="btn-primary" data-goto="1">Begin again &uarr;</a>
+            <a class="btn-secondary">Book a commission</a>
+          </div>
+        </div>
+      </div>
+      <div class="s-colophon-notes">
+        Set in <em>Fraunces</em> and Inter Tight, with metadata in JetBrains Mono. Photography for this volume is courtesy of the contributors at <a href="https://unsplash.com" target="_blank" rel="nofollow noopener">Unsplash</a>, used under the Unsplash license. Printed digitally; bound by hand where it should be.
+      </div>
+      <div class="s-colophon-bot">
+        <span><strong>Atelier Folio</strong> &middot; Selected Works MMXXVI</span>
+        <span>Designed in collaboration with TemplateMo</span>
+        <span>Volume I &middot; Edition of 250</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- POPUP MENU -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="menu-panel" id="menuPanel" role="dialog" aria-label="Slide navigation">
+  <div class="menu-header">
+    <h3>Table of <em>plates</em></h3>
+    <div class="menu-meta"><span id="menuCurr">01</span> / <span id="menuTotal">09</span></div>
   </div>
-</header>
-<div class="progress" aria-hidden="true"><i id="progBar"></i></div>
-
-<!-- ===================== DECK ===================== -->
-<main class="deck" id="deck">
-  <div class="stage-bg" id="stageBg" aria-hidden="true"></div>
-
-  <!-- ============ SLIDE 1 : COVER ============ -->
-  <section class="slide s-ink active" data-slide="0">
-    <div class="inner scrollable">
-      <div class="wrap cover">
-        <div class="toprow" data-reveal>
-          <span class="kicker hl-lime">Electronic Press Kit · 2026</span>
-          <div class="stickwrap">
-            <span class="sticker o">Now Booking</span>
-            <span class="sticker r2">New Album</span>
-          </div>
-        </div>
-
-        <div class="title" data-reveal>
-          <svg class="star spin floatstar" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
-            <path d="M50 0c4 28 18 42 50 50-32 8-46 22-50 50-4-28-18-42-50-50 32-8 46-22 50-50z"/>
-          </svg>
-          <h1 class="huge">HYPR<span class="o">LUV</span></h1>
-        </div>
-
-        <p class="lead" data-reveal style="font-size:clamp(16px,1.8vw,21px);font-weight:600">
-          Maximum volume hyperpop. Glossy chaos for people who treat the volume knob as a suggestion.
-        </p>
-
-        <div class="botrow" data-reveal>
-          <div class="btnrow">
-            <a class="btn fill" href="#" data-goto="2">Hear The Music</a>
-            <a class="btn" href="#" data-goto="7">Booking</a>
-          </div>
-          <span class="mono">EPK / TM-627</span>
-        </div>
-      </div>
-
-      <!-- in-flow bottom marquee -->
-      <div class="marquee bleed" data-reveal style="margin-top:20px;border-bottom:none;background:var(--lime);color:var(--ink)">
-        <div class="track">
-          <span>New album "Maximum Volume" out now</span><span class="s">&#10022;</span>
-          <span>2.4M monthly listeners</span><span class="s">&#10022;</span>
-          <span>As loud as legally allowed</span><span class="s">&#10022;</span>
-          <span>New album "Maximum Volume" out now</span><span class="s">&#10022;</span>
-          <span>2.4M monthly listeners</span><span class="s">&#10022;</span>
-          <span>As loud as legally allowed</span><span class="s">&#10022;</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 2 : BIO ============ -->
-  <section class="slide s-orange" data-slide="1">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker" data-reveal>02 / Who</span>
-        <h2 class="big" data-reveal style="margin:6px 0 16px">Who is<br>HYPRLUV</h2>
-        <div class="bio-grid">
-          <div data-reveal>
-            <p class="lead" style="margin-bottom:14px">
-              HYPRLUV is the solo project of a producer, vocalist, and full time noise enthusiast making hyperpop for the year 2000 that never quite arrived. Born online, raised in the club, built to be played far too loud.
-            </p>
-            <p class="lead">
-              Since the first bedroom upload in 2023, HYPRLUV has gone from blown out laptop speakers to sold out rooms across three continents, turning sugar rush melodies and system crash drums into a sound that refuses to sit still.
-            </p>
-            <div class="tags" style="margin-top:18px">
-              <span class="tag">Hyperpop</span>
-              <span class="tag">Electro Club</span>
-              <span class="tag">Glitch Pop</span>
-              <span class="tag">Y2K Revival</span>
-              <span class="tag">Maximalist</span>
-            </div>
-          </div>
-          <div class="bio-meta" data-reveal>
-            <div class="meta-card">
-              <div class="k">Based</div>
-              <div class="v">Bangkok / Everywhere</div>
-            </div>
-            <div class="meta-card">
-              <div class="k">For Fans Of</div>
-              <div class="v">Neonblood, K Rush, Sugarwave</div>
-            </div>
-            <div class="meta-card">
-              <div class="k">Active Since</div>
-              <div class="v">2023</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 3 : RELEASES ============ -->
-  <section class="slide s-ink" data-slide="2">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker hl-orange" data-reveal>03 / The Music</span>
-        <h2 class="big hl-lime" data-reveal style="margin:6px 0 14px">The Music</h2>
-
-        <div class="rel-hero" data-reveal>
-          <div>
-            <span class="sticker">Latest</span>
-            <div class="mid hl-lime" style="margin-top:10px">Maximum Volume</div>
-            <p class="mono" style="margin-top:5px;color:var(--white)">Album · 12 tracks · 38 minutes · zero chill</p>
-          </div>
-          <a class="btn fill" href="#">Stream Now</a>
-        </div>
-
-        <div class="rel-list">
-          <div class="rel-row" data-reveal><span class="t">1000 Gigabytes Of Luv</span><span class="ty">Single</span><span class="yr">2025</span></div>
-          <div class="rel-row" data-reveal><span class="t">Crash My Heart</span><span class="ty">Single</span><span class="yr">2025</span></div>
-          <div class="rel-row" data-reveal><span class="t">Stardust.exe</span><span class="ty">EP</span><span class="yr">2024</span></div>
-          <div class="rel-row" data-reveal><span class="t">Bubblegum Hyperdrive</span><span class="ty">Single</span><span class="yr">2024</span></div>
-          <div class="rel-row" data-reveal><span class="t">First Upload</span><span class="ty">Demo</span><span class="yr">2023</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 4 : STATS ============ -->
-  <section class="slide s-lime" data-slide="3">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker" data-reveal>04 / By The Numbers</span>
-        <h2 class="big" data-reveal style="margin:6px 0 16px">By The<br>Numbers</h2>
-        <div class="stat-grid" data-reveal>
-          <div class="stat"><span class="n">2.4M</span><span class="l">Monthly Listeners</span></div>
-          <div class="stat"><span class="n">180M</span><span class="l">Total Streams</span></div>
-          <div class="stat"><span class="n">920K</span><span class="l">Followers</span></div>
-          <div class="stat"><span class="n">50M</span><span class="l">Video Views</span></div>
-          <div class="stat"><span class="n">64</span><span class="l">Sold Out Shows</span></div>
-          <div class="stat"><span class="n">18</span><span class="l">Countries Played</span></div>
-        </div>
-        <p class="mono" data-reveal style="margin-top:14px">Numbers refreshed quarterly. Yes, they are still going up.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 5 : PRESS ============ -->
-  <section class="slide s-bone" data-slide="4">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker hl-orange" data-reveal>05 / Press</span>
-        <h2 class="big" data-reveal style="margin:6px 0 16px">What The<br>Press Says</h2>
-        <div class="quote-grid">
-          <div class="quote" data-reveal>
-            <span class="mk">"</span>
-            <p>The loudest thing to happen to pop since the year 2000.</p>
-            <span class="src">Noise Quarterly</span>
-          </div>
-          <div class="quote" data-reveal>
-            <span class="mk">"</span>
-            <p>A glorious system crash you can actually dance to.</p>
-            <span class="src">Pixel Press</span>
-          </div>
-          <div class="quote" data-reveal>
-            <span class="mk">"</span>
-            <p>If sugar had a sound, this would be the overdose.</p>
-            <span class="src">Volt Mag</span>
-          </div>
-          <div class="quote" data-reveal>
-            <span class="mk">"</span>
-            <p>Genuinely impossible to listen to quietly.</p>
-            <span class="src">Static Zine</span>
-          </div>
-        </div>
-      </div>
-      <!-- in-flow press logo marquee -->
-      <div class="marquee thin bleed" data-reveal style="margin-top:12px;border-bottom:none;background:var(--ink);color:var(--lime)">
-        <div class="track">
-          <span>Noise Quarterly</span><span class="s">&#10022;</span><span>Pixel Press</span><span class="s">&#10022;</span>
-          <span>Volt Mag</span><span class="s">&#10022;</span><span>Static Zine</span><span class="s">&#10022;</span><span>Hyperwave</span><span class="s">&#10022;</span>
-          <span>Noise Quarterly</span><span class="s">&#10022;</span><span>Pixel Press</span><span class="s">&#10022;</span>
-          <span>Volt Mag</span><span class="s">&#10022;</span><span>Static Zine</span><span class="s">&#10022;</span><span>Hyperwave</span><span class="s">&#10022;</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 6 : TOUR ============ -->
-  <section class="slide s-ink" data-slide="5">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap" data-reveal>
-          <div>
-            <span class="kicker hl-orange">06 / Live</span>
-            <h2 class="big hl-lime" style="margin-top:6px">On Tour</h2>
-          </div>
-          <span class="sticker o r3">2026 Dates</span>
-        </div>
-        <div class="tour-list" style="margin-top:18px">
-          <div class="tour-row" data-reveal><span class="date">12 Jun 2026</span><span class="city">Bangkok</span><span class="venue">Neon Hall</span><span class="status sold">Sold Out</span></div>
-          <div class="tour-row" data-reveal><span class="date">19 Jun 2026</span><span class="city">Singapore</span><span class="venue">Circuit Room</span><span class="status on">On Sale</span></div>
-          <div class="tour-row" data-reveal><span class="date">27 Jun 2026</span><span class="city">Tokyo</span><span class="venue">Static Dome</span><span class="status on">On Sale</span></div>
-          <div class="tour-row" data-reveal><span class="date">04 Jul 2026</span><span class="city">Seoul</span><span class="venue">Hyper Arena</span><span class="status few">Few Left</span></div>
-          <div class="tour-row" data-reveal><span class="date">11 Jul 2026</span><span class="city">Berlin</span><span class="venue">Volt Club</span><span class="status sold">Sold Out</span></div>
-          <div class="tour-row" data-reveal><span class="date">18 Jul 2026</span><span class="city">London</span><span class="venue">The Gloss</span><span class="status on">On Sale</span></div>
-        </div>
-        <p class="mono" data-reveal style="margin-top:14px">More dates dropping all year. Booking inquiries on the contact slide.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 7 : GALLERY ============ -->
-  <section class="slide s-orange" data-slide="6">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap" data-reveal>
-          <div>
-            <span class="kicker">07 / Visuals</span>
-            <h2 class="big" style="margin-top:6px">Press Photos</h2>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-            <div class="gal-nav">
-              <button class="gal-arrow" id="galPrev" aria-label="Previous photo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 5l-7 7 7 7"/></svg>
-              </button>
-              <button class="gal-arrow" id="galNext" aria-label="Next photo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
-              </button>
-            </div>
-            <a class="btn" href="#">Download Hi Res</a>
-          </div>
-        </div>
-        <div class="gal-strip" id="galStrip" style="margin-top:14px" data-reveal data-noswipe>
-          <figure class="shot"><img src="images/pic-01.jpg" alt="HYPRLUV press photo" loading="lazy"><figcaption class="cap">Press 01</figcaption></figure>
-          <figure class="shot"><img src="images/pic-02.jpg" alt="HYPRLUV press photo" loading="lazy"><figcaption class="cap">Press 02</figcaption></figure>
-          <figure class="shot"><img src="images/pic-03.jpg" alt="HYPRLUV live photo" loading="lazy"><figcaption class="cap">Live 01</figcaption></figure>
-          <figure class="shot"><img src="images/pic-04.jpg" alt="HYPRLUV live photo" loading="lazy"><figcaption class="cap">Live 02</figcaption></figure>
-          <figure class="shot"><img src="images/pic-05.jpg" alt="HYPRLUV studio photo" loading="lazy"><figcaption class="cap">Studio</figcaption></figure>
-          <figure class="shot"><img src="images/pic-06.jpg" alt="HYPRLUV backstage photo" loading="lazy"><figcaption class="cap">Backstage</figcaption></figure>
-          <figure class="shot"><img src="images/pic-07.jpg" alt="HYPRLUV cover art" loading="lazy"><figcaption class="cap">Cover Art</figcaption></figure>
-          <figure class="shot"><img src="images/pic-08.jpg" alt="HYPRLUV logo pack" loading="lazy"><figcaption class="cap">Logo Pack</figcaption></figure>
-        </div>
-        <p class="mono" data-reveal style="margin-top:12px;color:var(--ink)">Scroll sideways for more. Swap the sample images for your own hi res shots. Photo credit: add photographer name here.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 8 : CONTACT ============ -->
-  <section class="slide s-ink" data-slide="7">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker hl-orange" data-reveal>08 / Contact</span>
-        <h2 class="big hl-lime" data-reveal style="margin:6px 0 16px">Booking &amp;<br>Contact</h2>
-        <div class="contact-grid">
-          <div class="cc" data-reveal><div class="k">Management</div><div class="v">Maya Reyes<br><a href="mailto:mgmt@hyprluv.fm">mgmt@hyprluv.fm</a></div></div>
-          <div class="cc" data-reveal><div class="k">Booking (Worldwide)</div><div class="v">Loudhaus Agency<br><a href="mailto:book@hyprluv.fm">book@hyprluv.fm</a></div></div>
-          <div class="cc" data-reveal><div class="k">Label</div><div class="v">Volt Records</div></div>
-          <div class="cc" data-reveal><div class="k">Press</div><div class="v"><a href="mailto:press@hyprluv.fm">press@hyprluv.fm</a></div></div>
-        </div>
-        <div class="socials" data-reveal>
-          <span class="tag">@hyprluv</span>
-          <span class="tag">hyprluv.fm</span>
-          <span class="tag">All platforms</span>
-        </div>
-        <div class="btnrow" data-reveal style="margin-top:18px">
-          <a class="btn fill" href="#">Download Full EPK</a>
-          <a class="btn" href="#">Stream Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SLIDE 9 : MORE FROM TEMPLATEMO ============ -->
-  <section class="slide s-ink" data-slide="8">
-    <div class="inner scrollable">
-      <div class="wrap">
-        <span class="kicker hl-orange" data-reveal>09 / TemplateMo</span>
-        <h2 class="big hl-lime" data-reveal style="margin:6px 0 8px">More From<br>TemplateMo</h2>
-        <p class="lead" data-reveal style="margin-bottom:16px">Three more free single file slideshow decks, each with a different mood.</p>
-        <div class="promo-grid">
-          <a class="promo" href="https://templatemo.com" target="_blank" rel="nofollow noopener" data-reveal>
-            <span class="tm">TM-624</span><span class="nm">Lustro</span>
-            <span class="ds">Dark glassmorphic SaaS launch deck. Indigo and pink.</span>
-          </a>
-          <a class="promo" href="https://templatemo.com" target="_blank" rel="nofollow noopener" data-reveal>
-            <span class="tm">TM-625</span><span class="nm">Folio</span>
-            <span class="ds">Soft editorial photography portfolio. Powder plum and coral.</span>
-          </a>
-          <a class="promo" href="https://templatemo.com" target="_blank" rel="nofollow noopener" data-reveal>
-            <span class="tm">TM-626</span><span class="nm">Ledger</span>
-            <span class="ds">Formal consulting strategic plan. Forest green, bone, gold.</span>
-          </a>
-        </div>
-        <div class="btnrow" data-reveal style="margin-top:18px">
-          <a class="btn fill" href="https://templatemo.com" target="_blank" rel="nofollow noopener">Browse 600+ Free Templates</a>
-          <a class="btn" href="#" data-goto="0">Back To Start</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ===================== FIXED FOOTER BAR (static, like the header) ===================== -->
-<footer class="footerbar">
-  <span class="foot-credit"><span class="fc-long">TM-627 HYPRLUV EPK &middot; </span>Free template by <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">TemplateMo</a></span>
-  <div class="nav-pills">
-    <button class="pill" id="prevBtn" aria-label="Previous slide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 5l-7 7 7 7"/></svg>
-    </button>
-    <button class="pill" id="nextBtn" aria-label="Next slide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
-    </button>
+  <div class="menu-list" id="menuList"></div>
+  <div class="menu-footer">
+    <span>Press <kbd>M</kbd> to toggle</span>
+    <span><kbd>1</kbd>&ndash;<kbd>9</kbd> direct jump</span>
   </div>
-</footer>
+</div>
 
-<!-- ===================== POPUP NAV ===================== -->
-<nav class="nav-pop" id="navPop" aria-hidden="true">
-  <div class="nav-head">
-    <span class="mark">HYPR<b style="color:var(--orange)">LUV</b></span>
-    <button class="x" id="navClose" aria-label="Close menu">CLOSE &#10005;</button>
-  </div>
-  <ul class="nav-list">
-    <li><a href="#" data-goto="0"><span class="ix">01</span>Cover</a></li>
-    <li><a href="#" data-goto="1"><span class="ix">02</span>Who</a></li>
-    <li><a href="#" data-goto="2"><span class="ix">03</span>The Music</a></li>
-    <li><a href="#" data-goto="3"><span class="ix">04</span>Numbers</a></li>
-    <li><a href="#" data-goto="4"><span class="ix">05</span>Press</a></li>
-    <li><a href="#" data-goto="5"><span class="ix">06</span>On Tour</a></li>
-    <li><a href="#" data-goto="6"><span class="ix">07</span>Photos</a></li>
-    <li><a href="#" data-goto="7"><span class="ix">08</span>Contact</a></li>
-    <li><a href="#" data-goto="8"><span class="ix">09</span>TemplateMo</a></li>
-  </ul>
-  <div class="nav-foot">
-    Arrow keys, swipe, or tap. Free HTML template by <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">TemplateMo</a>.
-  </div>
-</nav>
+<!-- NAV -->
+<div class="nav">
+  <button id="prev" aria-label="Previous slide">&larr;</button>
+  <button id="menuBtn" class="menu-btn" aria-label="Open slide menu"><span class="icon"><i></i><i></i><i></i></span></button>
+  <div class="counter"><strong id="curr">01</strong> / <span id="total">09</span></div>
+  <button id="next" aria-label="Next slide">&rarr;</button>
+</div>
 
 <script>
 (function(){
-  "use strict";
+  var slides=document.querySelectorAll('.slide');
+  var currEl=document.getElementById('curr');
+  var totalEl=document.getElementById('total');
+  var menuCurrEl=document.getElementById('menuCurr');
+  var menuTotalEl=document.getElementById('menuTotal');
+  var sectionEl=document.getElementById('sectionName');
+  var prevBtn=document.getElementById('prev');
+  var nextBtn=document.getElementById('next');
+  var menuBtn=document.getElementById('menuBtn');
+  var menuOverlay=document.getElementById('menuOverlay');
+  var menuPanel=document.getElementById('menuPanel');
+  var menuList=document.getElementById('menuList');
+  var idx=0,isAnimating=false,menuOpen=false;
+  totalEl.textContent=String(slides.length).padStart(2,'0');
+  menuTotalEl.textContent=String(slides.length).padStart(2,'0');
 
-  var deck    = document.getElementById("deck");
-  var slides  = Array.prototype.slice.call(deck.querySelectorAll(".slide"));
-  var total   = slides.length;
-  var current = 0;
-  var animating = false;
-  var pending = null;   /* latest target requested mid transition */
+  /* Inject in-flow footer (mobile only) */
+  slides.forEach(function(s){
+    var inner=s.querySelector('.slide-inner');
+    if(!inner)return;
+    var footer=document.createElement('div');
+    footer.className='slide-footer';
+    footer.innerHTML='<div class="sf-section"><span class="pip"></span><span>'+s.dataset.section+'</span></div>'+
+      '<a class="sf-credit" href="https://templatemo.com" target="_blank" rel="nofollow noopener"><span class="pip"></span><span>Design: TemplateMo</span></a>';
+    inner.appendChild(footer);
+  });
 
-  var nowEl   = document.querySelector(".counter .now");
-  var progBar = document.getElementById("progBar");
-  var menuBtn = document.getElementById("menuBtn");
-  var navPop  = document.getElementById("navPop");
-  var navClose= document.getElementById("navClose");
-  var prevBtn = document.getElementById("prevBtn");
-  var nextBtn = document.getElementById("nextBtn");
+  /* Build menu items */
+  slides.forEach(function(s,i){
+    var item=document.createElement('div');
+    item.className='menu-item';
+    item.dataset.idx=i;
+    item.innerHTML='<span class="mi-num">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<div style="flex:1"><div class="mi-label">'+s.dataset.section+'</div>'+
+      (s.dataset.sub?'<div class="mi-sub">'+s.dataset.sub+'</div>':'')+'</div>'+
+      '<span class="mi-arr">&rarr;</span>';
+    item.addEventListener('click',function(){go(i);closeMenu()});
+    menuList.appendChild(item);
+  });
+  var menuItems=menuList.querySelectorAll('.menu-item');
+  function refreshMenuActive(){menuItems.forEach(function(el,i){el.classList.toggle('current',i===idx)})}
+  refreshMenuActive();
 
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* persistent background layer + per slide colour lookup */
-  var stageBg = document.getElementById("stageBg");
-  var rootCS  = getComputedStyle(document.documentElement);
-  var BGVAR   = { "s-ink":"--ink", "s-orange":"--orange", "s-lime":"--lime", "s-bone":"--bone" };
-  function slideColor(slide){
-    var key = ["s-ink","s-orange","s-lime","s-bone"].filter(function(c){ return slide.classList.contains(c); })[0] || "s-ink";
-    return rootCS.getPropertyValue(BGVAR[key]).trim() || "#0B0B0B";
-  }
-
-  /* fill each marquee so the scrolling text always spans the full width
-     and loops with no gap. the track is rebuilt from an even number of
-     identical copies, so the -50% keyframe stays seamless at any width */
-  function debounce(fn, ms){
-    var t; return function(){ clearTimeout(t); t = setTimeout(fn, ms); };
-  }
-  function fillMarquees(){
-    document.querySelectorAll(".marquee").forEach(function(m){
-      var track = m.querySelector(".track");
-      if (!track) return;
-      if (track.dataset.base === undefined){ track.dataset.base = track.innerHTML; }
-      var w = m.clientWidth;
-      /* full reset only when the width truly changed (load or resize), so the
-         post font-load pass never flashes the track away and back */
-      if (track.dataset.fillW !== String(w)){
-        track.dataset.fillW = String(w);
-        track.innerHTML = track.dataset.base;
-      }
-      /* top up only if short, this only ever grows so it cannot flicker */
-      var guard = 0;
-      while (track.scrollWidth < w * 2 && guard < 40){
-        track.insertAdjacentHTML("beforeend", track.dataset.base);
-        guard++;
-      }
-      track.style.animationDuration = Math.max(14, track.scrollWidth / 110).toFixed(1) + "s";
-    });
-  }
-
-  /* reveal items inside a slide, staggered */
-  function reveal(slide){
-    var items = slide.querySelectorAll("[data-reveal]");
-    items.forEach(function(el, i){
-      if (reduced){ el.classList.add("in"); return; }
-      setTimeout(function(){ el.classList.add("in"); }, 90 + i * 80);
-    });
-  }
-
-  /* failsafe: if anything stalls, force everything visible after 3s */
-  setTimeout(function(){
-    document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("in"); });
-  }, 3000);
-
-  function pad(n){ return (n < 9 ? "0" : "") + (n + 1); }
-
-  function update(){
-    if (nowEl) nowEl.textContent = pad(current);
-    if (progBar) progBar.style.width = ((current + 1) / total * 100) + "%";
-    if (prevBtn) prevBtn.disabled = (current === 0);
-    if (nextBtn) nextBtn.disabled = (current === total - 1);
-  }
-
-  /* transition timing knobs (ms): raise to slow the choreography, lower to speed it */
-  var STEP_OUT = 40;   /* gap between each item leaving */
-  var STEP_IN  = 55;   /* gap between each item arriving */
-  var BG_GAP   = 250;  /* background handoff (outgoing fades, then incoming) */
-
-  function goTo(index){
-    index = Math.max(0, Math.min(total - 1, index));
-    if (index === current) return;
-    if (animating){ pending = index; return; }
-    animating = true;
-
-    var prevS = slides[current];
-    var nextS = slides[index];
-    current = index;
-    update();
-
-    var outItems = Array.prototype.slice.call(prevS.querySelectorAll("[data-reveal].in"));
-    var inItems  = Array.prototype.slice.call(nextS.querySelectorAll("[data-reveal]"));
-    inItems.forEach(function(el){ el.classList.remove("in"); });   /* incoming starts hidden */
-    var innerNext = nextS.querySelector(".inner");
-
-    function finish(){
-      slides.forEach(function(s){ if (s !== nextS){ s.classList.remove("active"); s.classList.remove("leaving"); s.classList.remove("out"); } });
-      animating = false;
-      if (pending !== null){ var p = pending; pending = null; goTo(p); }
-    }
-
-    if (reduced){
-      if (stageBg) stageBg.style.backgroundColor = slideColor(nextS);
-      outItems.forEach(function(el){ el.classList.remove("in"); });
-      prevS.classList.remove("active");
-      nextS.classList.add("active");
-      if (innerNext) innerNext.scrollTop = 0;
-      inItems.forEach(function(el){ el.classList.add("in"); });
-      finish();
-      return;
-    }
-
-    /* PHASE A: outgoing content leaves in sequence (last item first) */
-    prevS.classList.add("out");
-    outItems.slice().reverse().forEach(function(el, i){
-      setTimeout(function(){ el.classList.remove("in"); }, i * STEP_OUT);
-    });
-    var outDone = (outItems.length ? (outItems.length - 1) * STEP_OUT : 0) + 180;
-
-    /* PHASE B: blend the persistent background colour, then swap which
-       slide owns the content. the colour change is one smooth interpolation */
+  function go(t){
+    if(isAnimating||t===idx||t<0||t>=slides.length)return;
+    isAnimating=true;
+    var old=slides[idx],next=slides[t];
+    old.classList.add('exiting');
+    old.classList.remove('active');
     setTimeout(function(){
-      if (stageBg) stageBg.style.backgroundColor = slideColor(nextS);
-      prevS.classList.remove("active");
-      prevS.classList.add("leaving");
-      nextS.classList.add("active");
-      if (innerNext) innerNext.scrollTop = 0;
-    }, outDone);
-
-    /* PHASE C: incoming content arrives in sequence as its background appears */
-    setTimeout(function(){
-      inItems.forEach(function(el, i){
-        setTimeout(function(){ el.classList.add("in"); }, i * STEP_IN);
-      });
-    }, outDone + BG_GAP);
-
-    var inDone = (inItems.length ? (inItems.length - 1) * STEP_IN : 0) + 500;
-    setTimeout(finish, outDone + BG_GAP + inDone);
+      next.classList.add('active');
+      next.scrollTop=0;
+      old.classList.remove('exiting');
+      idx=t;
+      var n=String(idx+1).padStart(2,'0');
+      currEl.textContent=n;
+      menuCurrEl.textContent=n;
+      sectionEl.textContent=next.dataset.section;
+      refreshMenuActive();
+      setTimeout(function(){isAnimating=false},900);
+    },350);
   }
 
-  function next(){ if (current < total - 1) goTo(current + 1, 1); }
-  function prev(){ if (current > 0) goTo(current - 1, -1); }
+  function openMenu(){menuOpen=true;menuOverlay.classList.add('open');menuPanel.classList.add('open');menuBtn.classList.add('open')}
+  function closeMenu(){menuOpen=false;menuOverlay.classList.remove('open');menuPanel.classList.remove('open');menuBtn.classList.remove('open')}
+  function toggleMenu(){menuOpen?closeMenu():openMenu()}
 
-  /* ---- menu ---- */
-  function openMenu(){
-    navPop.classList.add("open");
-    navPop.setAttribute("aria-hidden", "false");
-    menuBtn.setAttribute("aria-expanded", "true");
-  }
-  function closeMenu(){
-    navPop.classList.remove("open");
-    navPop.setAttribute("aria-hidden", "true");
-    menuBtn.setAttribute("aria-expanded", "false");
-  }
-  menuBtn.addEventListener("click", openMenu);
-  navClose.addEventListener("click", closeMenu);
+  prevBtn.addEventListener('click',function(){go(idx-1)});
+  nextBtn.addEventListener('click',function(){go(idx+1)});
+  menuBtn.addEventListener('click',toggleMenu);
+  menuOverlay.addEventListener('click',closeMenu);
 
-  /* ---- data-goto delegation ---- */
-  document.addEventListener("click", function(e){
-    var t = e.target.closest("[data-goto]");
-    if (!t) return;
+  /* Delegated handler for data-goto links */
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-goto]');
+    if(!el)return;
     e.preventDefault();
-    var idx = parseInt(t.getAttribute("data-goto"), 10);
-    if (!isNaN(idx)){
-      if (navPop.classList.contains("open")) closeMenu();
-      goTo(idx);
-    }
+    var n=parseInt(el.dataset.goto,10);
+    if(!isNaN(n)&&n>=1&&n<=slides.length)go(n-1);
   });
 
-  prevBtn.addEventListener("click", prev);
-  nextBtn.addEventListener("click", next);
-
-  /* ---- keyboard ---- */
-  document.addEventListener("keydown", function(e){
-    if (navPop.classList.contains("open")){
-      if (e.key === "Escape") closeMenu();
-      return;
-    }
-    switch(e.key){
-      case "ArrowRight": case "ArrowDown": case "PageDown":
-        e.preventDefault(); next(); break;
-      case "ArrowLeft": case "ArrowUp": case "PageUp":
-        e.preventDefault(); prev(); break;
-      case " ":
-        e.preventDefault(); next(); break;
-      case "Home":
-        e.preventDefault(); goTo(0); break;
-      case "End":
-        e.preventDefault(); goTo(total - 1); break;
-      default:
-        if (/^[1-9]$/.test(e.key)){ e.preventDefault(); goTo(parseInt(e.key,10) - 1); }
-    }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&menuOpen){closeMenu();return}
+    if(menuOpen)return;
+    if(e.key==='ArrowRight')go(idx+1);
+    if(e.key==='ArrowLeft')go(idx-1);
+    if(e.key===' '){e.preventDefault();go(idx+1)}
+    if(e.key==='m'||e.key==='M')toggleMenu();
+    if(/^[1-9]$/.test(e.key))go(parseInt(e.key,10)-1);
   });
 
-  /* ---- swipe (axis aware so vertical scroll still works) ---- */
-  var sx = 0, sy = 0, tracking = false;
-  deck.addEventListener("touchstart", function(e){
-    if (e.touches.length !== 1) { tracking = false; return; }
-    if (e.target.closest && e.target.closest("[data-noswipe]")) { tracking = false; return; }
-    sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
-  }, {passive:true});
-  deck.addEventListener("touchend", function(e){
-    if (!tracking) return;
-    tracking = false;
-    var t = e.changedTouches[0];
-    var dx = t.clientX - sx;
-    var dy = t.clientY - sy;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4){
-      if (dx < 0) next(); else prev();
-    }
-  }, {passive:true});
-
-  /* slide 07 gallery: step the strip by exactly one photo */
-  (function(){
-    var strip = document.getElementById("galStrip");
-    var gp = document.getElementById("galPrev");
-    var gn = document.getElementById("galNext");
-    if (!strip || !gp || !gn) return;
-    function step(){
-      var card = strip.querySelector(".shot");
-      var cs = getComputedStyle(strip);
-      var gap = parseFloat(cs.columnGap || cs.gap) || 14;
-      return card ? card.getBoundingClientRect().width + gap : strip.clientWidth * 0.8;
-    }
-    function sync(){
-      var max = strip.scrollWidth - strip.clientWidth - 1;
-      gp.disabled = strip.scrollLeft <= 0;
-      gn.disabled = strip.scrollLeft >= max;
-    }
-    var behavior = reduced ? "auto" : "smooth";
-    gp.addEventListener("click", function(){ strip.scrollBy({left:-step(), behavior:behavior}); });
-    gn.addEventListener("click", function(){ strip.scrollBy({left: step(), behavior:behavior}); });
-    strip.addEventListener("scroll", function(){ window.requestAnimationFrame(sync); }, {passive:true});
-    window.addEventListener("resize", debounce(sync, 200));
-    sync();
-  })();
-
-  /* init */
-  if (stageBg) stageBg.style.backgroundColor = slideColor(slides[0]);
-  reveal(slides[0]);
-  update();
-  fillMarquees();
-  if (document.fonts && document.fonts.ready){ document.fonts.ready.then(fillMarquees); }
-  window.addEventListener("resize", debounce(fillMarquees, 200));
+  /* Touch swipe */
+  var tx=0,ty=0,scrolling=false;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;scrolling=false},{passive:true});
+  document.addEventListener('touchmove',function(e){
+    var dx=Math.abs(e.touches[0].clientX-tx);
+    var dy=Math.abs(e.touches[0].clientY-ty);
+    if(dy>dx)scrolling=true;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(scrolling||menuOpen)return;
+    var dx=e.changedTouches[0].clientX-tx;
+    var dy=Math.abs(e.changedTouches[0].clientY-ty);
+    if(Math.abs(dx)>60&&dy<40)dx<0?go(idx+1):go(idx-1);
+  },{passive:true});
 })();
 </script>
 </body>
